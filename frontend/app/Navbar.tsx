@@ -51,6 +51,7 @@ export default function Navbar() {
   const handleLogout = () => {
     playClickSound();
     sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("isLogin");
     document.cookie =
       "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     router.push("/");

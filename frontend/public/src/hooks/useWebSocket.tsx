@@ -8,6 +8,8 @@ import socketStore from "../stores/websocket/socketStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import { wsUrl } from "@/public/src/utils/api";
+import { isDemoMode } from "@/public/src/utils/demoMode";
 export const useWebSocket = () => {
   const params = useParams();
   const client = useRef<CompatClient>({} as CompatClient);
@@ -66,9 +68,17 @@ export const useWebSocket = () => {
 
   useEffect(() => {
     if (memberId) {
+      if (isDemoMode()) {
+        setReceiveAlarm(true);
+        Swal.fire(`${nickname}님 환영합니다.`);
+        return () => {
+          setReceiveAlarm(false);
+        };
+      }
+
       fetchAlarmData();
       client.current = Stomp.over(() => {
-        const sock = new SockJS("https://j10a207.p.ssafy.io/ws");
+        const sock = new SockJS(wsUrl());
         return sock;
       });
       Swal.fire(`${nickname}님 환영합니다.`);

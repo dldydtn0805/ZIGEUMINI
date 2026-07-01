@@ -4,6 +4,8 @@ import { useQuery, UseQueryResult } from "react-query";
 import { useRouter } from "next/navigation";
 import userStore from "@/public/src/stores/user/userStore";
 import socketStore from "@/public/src/stores/websocket/socketStore";
+import { isDemoMode } from "@/public/src/utils/demoMode";
+import { startDemoSession } from "@/public/src/utils/demoSession";
 interface IsSignUpInfo {
   result: [string];
 }
@@ -18,6 +20,9 @@ export default function IsSignUpInfo() {
     }
     if (accessToken) {
       sessionStorage.setItem("accessToken", accessToken);
+    }
+    if (isDemoMode() && !accessToken) {
+      startDemoSession();
     }
     const response = await axios({
       method: "get",
@@ -63,6 +68,7 @@ export default function IsSignUpInfo() {
   };
 
   if (result && result[0] === "USER") {
+    sessionStorage.setItem("isLogin", "true");
     window.location.href = "/multi";
     // 여기서 get 요청 한번 보내기
     fetchLoginData();

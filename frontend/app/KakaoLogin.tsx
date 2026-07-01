@@ -4,6 +4,9 @@ import kakaoLoginImg from "./../public/src/assets/images/kakao.svg";
 import { TypewriterEffectSmooth } from "../public/src/components/ui/typewriter-effect";
 import backgroundVideo from "./../static/videos/bg.mp4";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import { kakaoAuthUrl } from "@/public/src/utils/api";
+import { isDemoMode } from "@/public/src/utils/demoMode";
+import { startDemoSession } from "@/public/src/utils/demoSession";
 // https://www.pixilart.com/art/blue-line-97f3322f9f26af9
 
 export default function KakaoLogin() {
@@ -36,9 +39,12 @@ export default function KakaoLogin() {
   ];
   const loginHandler = () => {
     if (typeof window !== "undefined") {
-      const API_URL = "https://j10a207.p.ssafy.io";
-      const KAKAO_AUTH_URL = `${API_URL}/oauth2/authorization/kakao`;
-      window.location.href = KAKAO_AUTH_URL;
+      if (isDemoMode()) {
+        startDemoSession();
+        window.location.href = "/multi";
+        return;
+      }
+      window.location.href = kakaoAuthUrl();
     }
   };
   return (
