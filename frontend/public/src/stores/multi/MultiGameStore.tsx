@@ -19,17 +19,6 @@ type Store = {
   setPageNumber: (value: number) => void;
   isWaiting: boolean;
   setIsWaiting: (value: boolean) => void;
-
-  stockId :number,
-  setStockId :(value :number) => void;
-  stockChartList :stockChartInterface[];
-  setStockChartList :(value :stockChartInterface[]) => void;
-  roundNumber :number;
-  setRoundNumber :(value :number) => void;
-  maxRoundNumber :number;
-  setMaxRoundNumber :(value :number) => void;
-  day :number;
-  setDay :(value :number) => void;
   getMultigameRoomInfo: (value: number) => void;
   tradeStocksAmount: number;
   setTradeStocksAmount:(value: number) => void;
@@ -70,18 +59,6 @@ export interface stockChartInterface {
   tradingVolume :number;
 }
 
-// stockId값을 종목 id로 가지는 종목의 350일 간의 차트 데이터
-export interface stockChartDataInterface {
-  stockId :number,
-  stockChartList :stockChartInterface[];
-}
-
-// 게임 페이지 렌더링 시 api 요청으로 받는 response.data.result
-export interface stockInfoDataInterface {
-  gameId :number;
-  stockChartData :stockChartDataInterface;
-}
-
 const multigameStore = create<Store>((set) => ({
   toggleTab: "all",
   setToggleTab: (value) => set({ toggleTab: value }),
@@ -99,17 +76,6 @@ const multigameStore = create<Store>((set) => ({
   setPageNumber: (value) => set({ pageNumber: value }),
   isWaiting: true,
   setIsWaiting: (value) => set({ isWaiting: value }),
-  // multi game state value
-  stockId :0,
-  setStockId: (value) => set({ stockId: value }),
-  stockChartList: [],
-  setStockChartList: (value) => set({ stockChartList: value }),
-  roundNumber: 0,
-  setRoundNumber :(value) => set({ roundNumber: value }),
-  maxRoundNumber :0,
-  setMaxRoundNumber: (value) => set({ maxRoundNumber: value }),
-  day: 1,
-  setDay: (value) => set({ day: value }),
   
   getMultigameRoomInfo: (value: number) => {
     axios({

@@ -13,7 +13,6 @@ import TradeButtons from "../../tradeButton";
 import GameMembers from "./GameMembers";
 import axios from "axios";
 import socketStore from "@/public/src/stores/websocket/socketStore";
-import multigameStore from "@/public/src/stores/multi/MultiGameStore";
 import type { stockChartInterface } from "@/public/src/stores/multi/MultiGameStore";
 import InGameBgm from "@/public/src/components/bgm/InGameBgm";
 import { useQuery } from "react-query";
@@ -79,7 +78,6 @@ export default function page() {
     setResultNumberCount(0);
   }, []);
 
-  const { setStockId, setStockChartList } = multigameStore();
   const {
     setAveragePrice,
     setCash,
@@ -139,8 +137,6 @@ export default function page() {
       retry: 1,
       onSuccess: (result) => {
         setMultiGameLogId(result.multiGameLogId);
-        setStockId(result.stockId);
-        setStockChartList(result.stockChartList);
         setTodayEndPrice(result.stockChartList[300]?.endPrice ?? 0);
       },
     }
@@ -220,7 +216,11 @@ export default function page() {
         <InGameBgm></InGameBgm>
         <div className="row-span-11 grid grid-cols-12 border">
           <aside className="col-span-2 text-center border p-2 grid grid-rows-12">
-            <GameStatus />
+            <GameStatus
+              currentPrice={
+                multiGameChart.stockChartList[299 + day]?.endPrice ?? 0
+              }
+            />
             <TradeHistory />
           </aside>
           <main className="col-span-8 grid grid-rows-12">
