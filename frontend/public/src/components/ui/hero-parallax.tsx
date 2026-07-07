@@ -10,9 +10,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import kakaoLoginImg from "../../assets/images/kakao.svg";
-import { kakaoAuthUrl } from "@/public/src/utils/api";
-import { isDemoMode } from "@/public/src/utils/demoMode";
-import { startDemoSession } from "@/public/src/utils/demoSession";
 
 export const HeroParallax = ({
   products,
@@ -108,12 +105,9 @@ export const HeroParallax = ({
 export const Header = () => {
   const loginHandler = () => {
     if (typeof window !== "undefined") {
-      if (isDemoMode()) {
-        startDemoSession();
-        window.location.href = "/multi";
-        return;
-      }
-      window.location.href = kakaoAuthUrl();
+      const API_URL = "https://j10a207.p.ssafy.io";
+      const KAKAO_AUTH_URL = `${API_URL}/oauth2/authorization/kakao`;
+      window.location.href = KAKAO_AUTH_URL;
     }
   };
   return (

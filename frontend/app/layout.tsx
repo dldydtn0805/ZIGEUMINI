@@ -5,7 +5,6 @@ import Navbar from "./Navbar";
 import WebSocket from "./WebSocket";
 import ProfileFriendRequest from "./profile/[userId]/ProfileFriendRequest";
 import ProfileSentFriendRequest from "./profile/[userId]/ProfileSentFriendRequest";
-import ApiBootstrap from "./ApiBootstrap";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,11 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ApiBootstrap />
-        <WebSocket></WebSocket>
-        {children}
-      </body>
+      <WebSocket></WebSocket>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
