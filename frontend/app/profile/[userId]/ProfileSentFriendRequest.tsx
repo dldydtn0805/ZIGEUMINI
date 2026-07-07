@@ -1,3 +1,5 @@
+"use client";
+
 import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -118,10 +120,10 @@ export default function ProfileSentFriendRequest() {
               </button>
             </div>
             <div className="p-4 md:p-5 space-y-4 h-96 overflow-auto">
-              {result?.map((item, i) => {
+              {result?.map((item) => {
                 return (
     <div
-                    key={i}
+                    key={item.memberId}
                     className="m-4 p-4 flex justify-between items-center"
                   >
                     <div className="flex justify-between items-center">
