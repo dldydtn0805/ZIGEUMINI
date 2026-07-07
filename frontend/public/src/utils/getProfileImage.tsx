@@ -4,7 +4,7 @@ import lv3 from "@/public/src/assets/images/Level/lv3.png";
 import lv4 from "@/public/src/assets/images/Level/lv4.png";
 import lv5 from "@/public/src/assets/images/Level/lv5.png";
 
-export default function useGetProfileImage(asset?: number | null) {
+export default function getProfileImage(asset?: number | null) {
   const assetValue = asset ?? 0;
 
   if (assetValue < 10000000) {

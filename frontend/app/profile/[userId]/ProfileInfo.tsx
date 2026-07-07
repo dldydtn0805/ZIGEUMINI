@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "react-query";
 
 import ProfileFriendRequest from "./ProfileFriendRequest";
-import useGetProfileRank from "@/public/src/hooks/useGetProfileRank";
+import getProfileRank from "@/public/src/utils/getProfileRank";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import useMe from "@/public/src/hooks/useMe";
 
@@ -197,7 +197,7 @@ export default function UserInfo() {
         <div className="row-start-5 row-end-9 flex justify-center items-center">
           <Image
             className="ring-2 rounded-full ring-background-1"
-            src={useGetProfileRank(result?.rankPoint)}
+            src={getProfileRank(result?.rankPoint)}
             alt="Tier Image"
             width={150}
           ></Image>

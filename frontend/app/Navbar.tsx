@@ -7,7 +7,7 @@ import NavbarGameModal from "./NavbarGameModal";
 import NavbarAlarmModal from "./NavbarAlarmModal";
 import fundCrudStore from "@/public/src/stores/fund/crud/FundCrudStore";
 import socketStore from "@/public/src/stores/websocket/socketStore";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import ProfileFriendRequest from "./profile/[userId]/ProfileFriendRequest";
 import ProfileSentFriendRequest from "./profile/[userId]/ProfileSentFriendRequest";

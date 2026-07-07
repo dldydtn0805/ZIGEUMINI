@@ -1,7 +1,7 @@
 import TierImage from "@/public/src/assets/images/Tier/diamond.png";
 import Image from "next/image";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
-import useGetProfileRank from "@/public/src/hooks/useGetProfileRank";
+import getProfileImage from "@/public/src/utils/getProfileImage";
+import getProfileRank from "@/public/src/utils/getProfileRank";
 import useMe from "@/public/src/hooks/useMe";
 
 export default function Profile() {
@@ -20,7 +20,7 @@ export default function Profile() {
         <div className="col-span-3 border grid grid-rows-4 justify-center items-center">
           <div className="row-span-3 m-2 w-full">
             <Image
-              src={useGetProfileImage(asset)}
+              src={getProfileImage(asset)}
               alt="Profile-image"
               width={70}
             />
@@ -32,7 +32,7 @@ export default function Profile() {
         <div className="col-span-3 border grid grid-rows-4 justify-center items-center">
           <div className="row-span-3 m-2">
             <Image
-              src={useGetProfileRank(rankPoint)}
+              src={getProfileRank(rankPoint)}
               alt="Tier-image"
               width={70}
             />

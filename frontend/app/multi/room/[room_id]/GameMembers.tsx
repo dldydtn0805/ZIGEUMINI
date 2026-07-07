@@ -8,7 +8,7 @@ import useClickSound from '@/public/src/components/clickSound/DefaultClick'
 import socketStore from '@/public/src/stores/websocket/socketStore'
 import { ParticipantsType } from '@/public/src/stores/websocket/socketStore'
 import axios from 'axios'
-import useGetProfileImage from '@/public/src/hooks/useGetProfileImage'
+import getProfileImage from '@/public/src/utils/getProfileImage'
 import useMe from '@/public/src/hooks/useMe'
 
 
@@ -42,7 +42,7 @@ export default function GameMembers(){
             <div key={i} className="row-span-1 grid grid-cols-12 items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <div className="col-span-3 ms-3 text-gray-900 whitespace-nowrap dark:text-white">
                 <Image
-                  src={useGetProfileImage(user.asset)}
+                  src={getProfileImage(user.asset)}
                   alt='프로필'
                   width={60}
                   style={{

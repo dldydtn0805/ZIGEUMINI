@@ -6,7 +6,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import { useParams } from "next/navigation";
 import profileStore from "@/public/src/stores/profile/profileStore";
 import axios from "axios";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 
 interface resultType {
   memberID: number;
@@ -63,7 +63,7 @@ export default function UserRecord() {
         <div className="col-start-1 col-end-5 flex justify-center items-center ">
           <Image
             className="rounded-full ring-2 ring-background-1 dark:ring-background-1"
-            src={useGetProfileImage(result?.asset)}
+            src={getProfileImage(result?.asset)}
             alt="Extra large avatar"
             width={120}
           ></Image>

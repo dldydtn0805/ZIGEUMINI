@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { useQuery, UseQueryResult, useQueryClient } from "react-query";
 import { useMutation } from "react-query";
 import axios, { AxiosResponse } from "axios";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import useMe from "@/public/src/hooks/useMe";
 
@@ -147,7 +147,7 @@ export default function BoardReceive() {
               <div className="flex justify-center items-center">
                 <Image
                   className="rounded-full ring-1 ring-background-1 dark:ring-gray-500"
-                  src={useGetProfileImage(item.asset)}
+                  src={getProfileImage(item.asset)}
                   alt="Extra large avatar"
                   width={90}
                 ></Image>

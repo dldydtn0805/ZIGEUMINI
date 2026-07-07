@@ -3,7 +3,7 @@ import ProfileImage from "@/public/src/assets/images/profile-image.png";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import Image from "next/image";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 export default function FinalUser({ player }: any) {
   const playClickSound = useClickSound();
 
@@ -20,7 +20,7 @@ export default function FinalUser({ player }: any) {
         </div>
         <div className=" col-start-3 col-span-2">
           <Image
-            src={useGetProfileImage(player.rank * 10000000)}
+            src={getProfileImage(player.rank * 10000000)}
             alt="profile-image"
             width={60}
             height={60}

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import profileStore from "@/public/src/stores/profile/profileStore";
 import Image from "next/image";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 import { useParams } from "next/navigation";
 import Swal from "sweetalert2";
 import {

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Profile from '@/public/src/assets/images/penguin.png'
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage"
+import getProfileImage from "@/public/src/utils/getProfileImage"
 import useMe from "@/public/src/hooks/useMe"
 
 export default function ProfileImage(){
@@ -9,7 +9,7 @@ export default function ProfileImage(){
   return(
     <div className="flex justify-around">
       <Image
-        src={useGetProfileImage(asset)}
+        src={getProfileImage(asset)}
         alt="profile-image"
         width={10}
         height={10}

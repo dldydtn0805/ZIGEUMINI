@@ -8,8 +8,8 @@ import Image from "next/image";
 import { UseQueryResult, useQuery, useQueryClient } from "react-query";
 import { UserInfo, UserProfile } from "@/public/src/stores/user/userStore";
 import axios from "axios";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
-import useGetProfileRank from "@/public/src/hooks/useGetProfileRank";
+import getProfileImage from "@/public/src/utils/getProfileImage";
+import getProfileRank from "@/public/src/utils/getProfileRank";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
@@ -138,7 +138,7 @@ export default function ProfileModal() {
             <div className="col-span-3 border grid grid-rows-4 justify-items-center">
               <div className="row-span-3 m-2">
                 <Image
-                  src={useGetProfileImage(result?.asset)}
+                  src={getProfileImage(result?.asset)}
                   alt="Profile-image"
                   width={80}
                 />
@@ -148,7 +148,7 @@ export default function ProfileModal() {
             <div className="col-span-3 border grid grid-rows-4 justify-items-center">
               <div className="row-span-3 m-2">
                 <Image
-                  src={useGetProfileRank(result?.rankPoint)}
+                  src={getProfileRank(result?.rankPoint)}
                   alt="Tier-image"
                   width={80}
                 />

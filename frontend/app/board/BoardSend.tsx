@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "react-query";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import useMe from "@/public/src/hooks/useMe";
 
@@ -99,7 +99,7 @@ export default function BoardSend() {
       <div className="col-start-2">
         <Image
           className="rounded-full ring-2 ring-background-1 dark:ring-gray-500 relative"
-          src={useGetProfileImage(asset)}
+          src={getProfileImage(asset)}
           alt="Extra large avatar"
           width={100}
         ></Image>

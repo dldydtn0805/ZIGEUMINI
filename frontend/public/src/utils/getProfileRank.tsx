@@ -6,7 +6,7 @@ import diamond from "@/public/src/assets/images/Tier/diamond.png";
 import master from "@/public/src/assets/images/Tier/master.png";
 import challenger from "@/public/src/assets/images/Tier/challenger.png";
 
-export default function useGetProfileRank(rankPoint?: number | null) {
+export default function getProfileRank(rankPoint?: number | null) {
   const rankPointValue = rankPoint ?? 0;
 
   if (rankPointValue < 100) {

@@ -10,7 +10,7 @@ import { Friend, FriendInfo } from "@/public/src/stores/user/userStore";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
-import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
+import getProfileImage from "@/public/src/utils/getProfileImage";
 
 const fetchFriendInfo = async () => {
   const token = sessionStorage.getItem("accessToken");
@@ -84,7 +84,7 @@ export default function FriendSearch() {
             >
               <div className="col-span-2 items-center text-gray-900 whitespace-nowrap dark:text-white">
                 <Image
-                  src={useGetProfileImage(friend?.asset)}
+                  src={getProfileImage(friend?.asset)}
                   alt="프로필"
                   className="rounded-full"
                 />
