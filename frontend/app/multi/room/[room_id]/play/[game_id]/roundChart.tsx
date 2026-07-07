@@ -164,6 +164,10 @@ export default function Chart({ data }: any) {
     const { day } = socketStore();
     const [selectedSecondaryIndicator, setSelectedSecondaryIndicator] = useState<number>(1);
     useEffect(() => {
+        if (!data?.length) {
+            return;
+        }
+
         const purifiedData = filteringLowPriceZero(data);
         
         // 차트 생성
@@ -529,7 +533,7 @@ export default function Chart({ data }: any) {
             (window as any).handleShowPlot = null;
         };
     
-    }, [day]);
+    }, [data, day]);
 
     const playClickSound = useClickSound();
   
@@ -579,4 +583,3 @@ export default function Chart({ data }: any) {
 
   );
 }
-

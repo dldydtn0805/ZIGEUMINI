@@ -7,14 +7,16 @@ import GameStatus from "./gameStatus";
 import RoundChart from "./roundChart";
 import Chat from "../../chat";
 import TradeHistory from "./tradeHistory";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import TradeButtons from "../../tradeButton";
 import GameMembers from "./GameMembers";
 import axios from "axios";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import multigameStore from "@/public/src/stores/multi/MultiGameStore";
+import type { stockChartInterface } from "@/public/src/stores/multi/MultiGameStore";
 import InGameBgm from "@/public/src/components/bgm/InGameBgm";
+import { useQuery } from "react-query";
 
 export type dataType = {
   date: string;
@@ -23,6 +25,16 @@ export type dataType = {
   low: number;
   close: number;
   volume: number;
+};
+
+type MultiGameChartResult = {
+  multiGameLogId: number;
+  stockId: number;
+  stockChartList: stockChartInterface[];
+};
+
+type MultiGameChartResponse = {
+  result: MultiGameChartResult;
 };
 
 export default function page() {
@@ -54,7 +66,6 @@ export default function page() {
     day,
     setDay,
     roundNumber,
-    maxRoundNumber,
     roomId,
     gameId,
     multiGameStockIds,
@@ -67,11 +78,8 @@ export default function page() {
   useEffect(() => {
     setResultNumberCount(0);
   }, []);
-  
-  const { stockId, setStockId, stockChartList, setStockChartList } =
-    multigameStore();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+
+  const { setStockId, setStockChartList } = multigameStore();
   const {
     setAveragePrice,
     setCash,
@@ -86,35 +94,61 @@ export default function page() {
     setUnrealizedGain,
     setTradeList,
   } = socketStore();
-  
-  const fetchMultigameData = async () => {
-    setDay(1);
-    const currentStock = multiGameStockIds[roundNumber - 1];
 
+  const currentStock = multiGameStockIds[roundNumber - 1];
+
+  const fetchMultigameData = async () => {
     if (!currentStock) {
-      return;
+      throw new Error("현재 라운드의 종목 정보가 없습니다.");
     }
 
-    try {
-      const response = await axios({
-        method: "post",
-        url: apiUrl("/multi/game-chart"),
-        data: {
-          roundNumber: roundNumber,
-          stockId: currentStock.stockId,
-          gameId: gameId,
-          firstDayStockChartId: currentStock.firstDayStockChartId,
-          roomId: roomId,
-        },
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      });
-      setMultiGameLogId(response.data.result.multiGameLogId);
-      setStockId(response.data.result.stockId);
-      setStockChartList(response.data.result.stockChartList);
-      setIsLoading(false);
-      setTodayEndPrice(response.data.result.stockChartList[300]?.endPrice ?? 0);
+    const response = await axios<MultiGameChartResponse>({
+      method: "post",
+      url: apiUrl("/multi/game-chart"),
+      data: {
+        roundNumber: roundNumber,
+        stockId: currentStock.stockId,
+        gameId: gameId,
+        firstDayStockChartId: currentStock.firstDayStockChartId,
+        roomId: roomId,
+      },
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    });
+
+    return response.data.result;
+  };
+
+  const {
+    data: multiGameChart,
+    isLoading,
+    isError,
+  } = useQuery(
+    [
+      "MultiGameChart",
+      roomId,
+      gameId,
+      roundNumber,
+      currentStock?.stockId,
+      currentStock?.firstDayStockChartId,
+    ],
+    fetchMultigameData,
+    {
+      enabled: !!roomId && !!gameId && !!roundNumber && !!currentStock,
+      retry: 1,
+      onSuccess: (result) => {
+        setMultiGameLogId(result.multiGameLogId);
+        setStockId(result.stockId);
+        setStockChartList(result.stockChartList);
+        setTodayEndPrice(result.stockChartList[300]?.endPrice ?? 0);
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (currentStock) {
+      setDay(1);
       setAveragePrice(0);
       setCash(10000000);
       setInitialAsset(10000000);
@@ -127,16 +161,23 @@ export default function page() {
       setTotalPurchaseAmount(0);
       setUnrealizedGain(0);
       setTradeList([]);
-    } catch (error) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchMultigameData();
-  }, [multiGameStockIds, roundNumber, gameId, roomId]);
+  }, [
+    currentStock,
+    setDay,
+    setAveragePrice,
+    setCash,
+    setInitialAsset,
+    setProfitMargin,
+    setShortAveragePrice,
+    setShortStockAmount,
+    setStockAmount,
+    setStockValue,
+    setTotalAsset,
+    setTotalPurchaseAmount,
+    setUnrealizedGain,
+    setTradeList,
+  ]);
 
   const params = useParams<{ room_id?: string; game_id?: string }>();
   const room_id: string | undefined = params.room_id;
@@ -159,15 +200,15 @@ export default function page() {
   };
 
   useEffect(() => {
-    if (!isLoading && !isError && room_id && game_id) {
+    if (!isLoading && !isError && multiGameChart && room_id && game_id) {
       fetchMultiPlayUsers();
     }
-  }, [isLoading, isError, room_id, game_id]);
+  }, [isLoading, isError, multiGameChart, room_id, game_id]);
 
-  if (isLoading) {
+  if (!currentStock || isLoading) {
     return <div className="rainbow"></div>;
   }
-  if (isError) {
+  if (isError || !multiGameChart) {
     return <div>Error</div>;
   }
 
@@ -184,7 +225,11 @@ export default function page() {
           </aside>
           <main className="col-span-8 grid grid-rows-12">
             <RoundChart
-              data={stockChartList ? stockChartList.slice(0, 300 + day) : null}
+              data={
+                multiGameChart?.stockChartList
+                  ? multiGameChart.stockChartList.slice(0, 300 + day)
+                  : null
+              }
             />
             <div className="row-span-3 border">
               <Chat />
