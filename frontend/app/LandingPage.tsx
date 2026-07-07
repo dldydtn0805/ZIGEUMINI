@@ -30,79 +30,79 @@ export function LandingPage() {
 export const products = [
   {
     title: "shortSell",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: shortSell,
   },
   {
     title: "shortBuy",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: shortBuy,
   },
   {
     title: "tradeBuy",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: tradeBuy,
   },
   {
     title: "tradeSell",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: tradeSell,
   },
   {
     title: "chartTotal",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: chartTotal,
   },
 
   {
     title: "fundDetail",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: fundDetail,
   },
   {
     title: "fundCreate",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: fundCreate,
   },
   {
     title: "fundLobby",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: fundLobby,
   },
   {
     title: "chartRsi",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: chartRsi,
   },
   {
     title: "chartMacd",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: chartMacd,
   },
 
   {
     title: "profile",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: profile,
   },
   {
     title: "profileFriend",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: profileFriend,
   },
   {
     title: "quiz",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: quiz,
   },
   {
     title: "community",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: community,
   },
   {
     title: "boardDetail",
-    link: "https://samsung.com",
+    link: "#",
     thumbnail: boardDetail,
   },
 ];
