@@ -1,4 +1,6 @@
 "use client";
+
+import { API_ORIGIN } from "@/public/src/config/api";
 import Image from "next/image";
 import kakaoLoginImg from "./../public/src/assets/images/kakao.svg";
 import { TypewriterEffectSmooth } from "../public/src/components/ui/typewriter-effect";
@@ -36,7 +38,7 @@ export default function KakaoLogin() {
   ];
   const loginHandler = () => {
     if (typeof window !== "undefined") {
-      const API_URL = "https://j10a207.p.ssafy.io";
+      const API_URL = API_ORIGIN;
       const KAKAO_AUTH_URL = `${API_URL}/oauth2/authorization/kakao`;
       window.location.href = KAKAO_AUTH_URL;
     }

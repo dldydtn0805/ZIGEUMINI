@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
@@ -35,7 +37,7 @@ export default function UserRecordInfoMemberFund() {
   const fetchFundMemberBoard = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/fund/other-investing-list?memberId=${id}`,
+      url: apiUrl(`/fund/other-investing-list?memberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

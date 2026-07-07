@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import Header from "./header";
 import GameStatus from "./gameStatus";
 import RoundChart from "./roundChart";
@@ -97,10 +99,9 @@ export default function page() {
           multiGameStockIds[roundNumber - 1].firstDayStockChartId,
         roomId: roomId,
       };
-      console.log(data);
       const response = await axios({
         method: "post",
-        url: "https://j10a207.p.ssafy.io/api/multi/game-chart",
+        url: apiUrl("/multi/game-chart"),
         data: {
           roundNumber: roundNumber,
           stockId: multiGameStockIds[roundNumber - 1].stockId,
@@ -113,10 +114,7 @@ export default function page() {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
-      console.log(response.data);
       setMultiGameLogId(response.data.result.multiGameLogId);
-      // console.log("stockId : ", response.data.result.stockId);
-      console.log("stockChartList : ", response.data.result.stockChartList);
       setStockId(response.data.result.stockId);
       setStockChartList(response.data.result.stockChartList);
       setIsLoading(false);
@@ -134,7 +132,6 @@ export default function page() {
       setUnrealizedGain(0);
       setTradeList([]);
     } catch (error) {
-      console.log(error);
       setIsError(true);
     }
   };
@@ -149,7 +146,7 @@ export default function page() {
 
   const fetchMultiPlayUsers = async () => {
     const response = await axios({
-      url: `https://j10a207.p.ssafy.io/api/multi/player-info`,
+      url: apiUrl(`/multi/player-info`),
       method: `post`,
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,

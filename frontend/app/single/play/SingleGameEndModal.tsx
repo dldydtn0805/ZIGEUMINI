@@ -1,4 +1,6 @@
 'use client'
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter } from 'next/navigation'
 import SingleGameStore from '@/public/src/stores/single/SingleGameStore';
 export default function SingleGameEndModal ({ isOpen, onClose } :any) {
@@ -8,7 +10,7 @@ export default function SingleGameEndModal ({ isOpen, onClose } :any) {
     const singleGameAgainHandler = () => {
         onClose();
         if (typeof window != undefined) {
-            // window.location.replace("https://j10a207.p.ssafy.io/api/single/play");
+            // window.location.replace(apiUrl("/single/play"));
             window.location.href = window.location.href;
         }
     }

@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import profileStore from "@/public/src/stores/profile/profileStore";
@@ -32,7 +33,7 @@ export default function ProfileBoardDetail({
   const { memberId } = userStore();
   const fetchCommunityDetail = async () => {
     const response = await axios({
-      url: `https://j10a207.p.ssafy.io/api/community?communityId=${isBoardOpen}`,
+      url: apiUrl(`/community?communityId=${isBoardOpen}`),
       method: "get",
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -47,14 +48,13 @@ export default function ProfileBoardDetail({
     (isBoardOpen: number) =>
       axios({
         method: "delete",
-        url: `https://j10a207.p.ssafy.io/api/community?communityId=${isBoardOpen}`,
+        url: apiUrl(`/community?communityId=${isBoardOpen}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       }),
     {
       onSuccess: () => {
-        console.log(isBoardOpen);
         queryClient.invalidateQueries("userBoardInfo");
         setIsBoardOpen(null);
       },

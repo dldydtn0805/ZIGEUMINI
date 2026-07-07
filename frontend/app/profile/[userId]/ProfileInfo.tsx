@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import Image from "next/image";
 import styles from "./page.module.css";
 import UserRecord from "./ProfileRecord";
@@ -44,7 +46,7 @@ export default function UserInfo() {
   const fetchUserInfo = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/profile?memberId=${id}`,
+      url: apiUrl(`/member/profile?memberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -62,7 +64,7 @@ export default function UserInfo() {
   const checkFriendRequest = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/friend/check-friend?followingId=${id}`,
+      url: apiUrl(`/friend/check-friend?followingId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -82,7 +84,7 @@ export default function UserInfo() {
     (request: any) =>
       axios({
         method: "post",
-        url: "https://j10a207.p.ssafy.io/api/friend-ask",
+        url: apiUrl("/friend-ask"),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -101,7 +103,7 @@ export default function UserInfo() {
     () =>
       axios({
         method: "delete",
-        url: `https://j10a207.p.ssafy.io/api/friend/delete?followingId=${id}`,
+        url: apiUrl(`/friend/delete?followingId=${id}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

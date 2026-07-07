@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -31,13 +33,12 @@ export default function NavbarGameModal() {
     // api 요청으로 넘어오는 데이터 : 이어하기 유무(true/false), 게임 방 번호
     // 확인 후 res.data.result 값이 true일 경우, Swal.fire 오픈
     axios
-      .get("https://j10a207.p.ssafy.io/api/single/is-existing-single-game", {
+      .get(apiUrl("/single/is-existing-single-game"), {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       })
       .then((res) => {
-        console.table("res : ", res.data);
         // 여기서 singleGameChance도 같이 보내야 하지 않나?
         if (res.data.result.isExistSingleGame == true) {
           Swal.fire({

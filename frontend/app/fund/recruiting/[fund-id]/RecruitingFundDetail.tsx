@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import Image from "next/image";
 import ProfileImage from "@/public/src/assets/images/profile-image.png";
 import { useParams, useRouter } from "next/navigation";
@@ -22,7 +24,7 @@ type FundRegister = {
 
 const fetchFundDetail = async (fundId: string, token: string | null) => {
   const response = await fetch(
-    `https://j10a207.p.ssafy.io/api/fund/fund-detail?fundId=${fundId}`,
+    apiUrl(`/fund/fund-detail?fundId=${fundId}`),
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,7 +64,6 @@ export default function RecruitingFundDetail() {
     () => fetchFundDetail(fundId, token),
     {
       onSuccess: (response) => {
-        console.log("펀드 상세 정보:", response.result);
       },
       onError: (error) => {
         console.error(error);
@@ -105,13 +106,12 @@ export default function RecruitingFundDetail() {
       investmentAmount: Number(investmoney),
     };
     await axios
-      .post("https://j10a207.p.ssafy.io/api/fund/register", registerForm, {
+      .post(apiUrl("/fund/register"), registerForm, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response.data);
         Swal.fire({
           title: "펀드 가입에 성공하셨습니다",
           icon: "success",
@@ -129,13 +129,12 @@ export default function RecruitingFundDetail() {
       fundName: fundName,
     };
     await axios
-      .put("https://j10a207.p.ssafy.io/api/fund/start", fundInfo, {
+      .put(apiUrl("/fund/start"), fundInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response.data);
         const status = response.data.status;
         if (status == 200) {
           Swal.fire({

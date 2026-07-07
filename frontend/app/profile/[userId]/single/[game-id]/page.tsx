@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl, hadoopUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation"; // useParams 대신 useRouter를 사용
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
@@ -53,12 +55,11 @@ export default function page() {
     try {
       const response = await axios({
         method: "get",
-        url: `https://j10a207.p.ssafy.io/api/single/log?singleGameLogId=${gameId}`,
+        url: apiUrl(`/single/log?singleGameLogId=${gameId}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
-      // console.log("싱글 복기 가장 첫 response : ", response.data.result);
       setStartDate(response.data.result.startDate.split("T")[0]);
       setEndDate(response.data.result.endDate.split("T")[0]);
       setRankMemberList(response.data.result.rankMemberList);
@@ -68,7 +69,6 @@ export default function page() {
       setTradeList(response.data.result.tradeList);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsError(true);
     }
   };
@@ -77,17 +77,15 @@ export default function page() {
     try {
       const response = await axios({
         method: "get",
-        url: `https://j10a207.p.ssafy.io/hadoop/stock/change-count/start-end?startDate=${startDate}&endDate=${endDate}&stockCode=${stockCode}`,
+        url: hadoopUrl(`/stock/change-count/start-end?startDate=${startDate}&endDate=${endDate}&stockCode=${stockCode}`),
         headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         }
       })
-      console.log("posneg : ", response.data.result);
       setPositiveCount(response.data.result[0].positiveCount);
       setNegativeCount(response.data.result[0].negativeCount);
       
     } catch (error) {
-      console.log("pos neg error : ", error);
     }
   }
   useEffect(() => {

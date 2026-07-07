@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import profileStore from "@/public/src/stores/profile/profileStore";
@@ -27,7 +28,7 @@ interface SentFriendRequestInfo {
 
 const fetchSentFriendRequests = async () => {
   const response = await axios({
-    url: "https://j10a207.p.ssafy.io/api/friend-ask/send-list",
+    url: apiUrl("/friend-ask/send-list"),
     method: "get",
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -60,7 +61,7 @@ export default function ProfileSentFriendRequest() {
     (nickname: string) =>
       axios({
         method: "delete",
-        url: `https://j10a207.p.ssafy.io/api/friend-ask/cancel?nickname=${nickname}`,
+        url: apiUrl(`/friend-ask/cancel?nickname=${nickname}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import Image from "next/image";
 import penguin from "./../../public/src/assets/images/penguin.png";
 import Swal from "sweetalert2";
@@ -31,7 +33,7 @@ const deleteBoard = async (
 ): Promise<AxiosResponse<DeleteBoardResponse>> => {
   const response = await axios({
     method: "delete",
-    url: `https://j10a207.p.ssafy.io/api/community?communityId=${boardId}`,
+    url: apiUrl(`/community?communityId=${boardId}`),
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
     },
@@ -42,7 +44,7 @@ const deleteBoard = async (
 const fetchBoardInfo = async () => {
   const response = await axios({
     method: "get",
-    url: "https://j10a207.p.ssafy.io/api/community/all",
+    url: apiUrl("/community/all"),
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
     },
@@ -99,7 +101,6 @@ export default function BoardReceive() {
       }
     });
   };
-  console.log(result);
   return (
     <div style={{ maxHeight: "60vh" }} className="overflow-auto">
       {result?.map((item, i) => {

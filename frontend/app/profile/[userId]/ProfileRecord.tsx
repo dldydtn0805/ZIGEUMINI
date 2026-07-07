@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import UserRecordInfo from "./ProfileRecordInfo";
 import Image from "next/image";
 import penguin from "../../../public/src/assets/images/penguin.png";
@@ -32,7 +33,7 @@ export default function UserRecord() {
   const fetchUserInfo = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/profile?memberId=${id}`,
+      url: apiUrl(`/member/profile?memberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

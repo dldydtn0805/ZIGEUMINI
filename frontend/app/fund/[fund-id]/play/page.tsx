@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -85,13 +87,12 @@ export default function FundPlay() {
     try {
       const response = await axios({
         method: "get",
-        url: `https://j10a207.p.ssafy.io/api/fund/game?fundId=${params["fund-id"]}`,
+        url: apiUrl(`/fund/game?fundId=${params["fund-id"]}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
 
-      console.log("response : ", response.data.result);
       // if (response.data.result.day > 0) {
       //   setTurn(response.data.result.day);
       // } else {
@@ -132,7 +133,6 @@ export default function FundPlay() {
       // }
       // 10개 랜덤 종목 데이터
       setStockListData(response.data.result.stockChartDataList);
-      // console.log('시작 날짜')
       const startTime = new Date(
         response.data.result.stockChartDataList[0].stockChartList[249].date
       ).getTime();
@@ -157,7 +157,6 @@ export default function FundPlay() {
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsError(true);
     }
   };

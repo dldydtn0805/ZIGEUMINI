@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import multigameStore from "@/public/src/stores/multi/MultiGameStore";
 import ProfileImage from "@/public/src/assets/images/penguin.png";
 import TierImage from "@/public/src/assets/images/Tier/challenger.png";
@@ -15,7 +17,7 @@ import { useRouter } from "next/navigation";
 const fetchProfile = async (userId: number) => {
   const token = sessionStorage.getItem("accessToken");
   const response = await fetch(
-    `https://j10a207.p.ssafy.io/api/member/profile?memberId=${userId}`,
+    apiUrl(`/member/profile?memberId=${userId}`),
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,7 +29,7 @@ const fetchProfile = async (userId: number) => {
 
 const checkFriend = async (followingId: number) => {
   const response = await fetch(
-    `https://j10a207.p.ssafy.io/api/friend/check-friend?followingId=${followingId}`,
+    apiUrl(`/friend/check-friend?followingId=${followingId}`),
     {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -58,7 +60,7 @@ export default function ProfileModal() {
     const token = sessionStorage.getItem("accessToken");
     axios({
       method: "post",
-      url: "https://j10a207.p.ssafy.io/api/friend-ask",
+      url: apiUrl("/friend-ask"),
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -95,20 +97,18 @@ export default function ProfileModal() {
     const token = sessionStorage.getItem("accessToken");
     axios({
       method: "delete",
-      url: `https://j10a207.p.ssafy.io/api/friend/delete?followingId=${userId}`,
+      url: apiUrl(`/friend/delete?followingId=${userId}`),
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
-        console.log(response.data);
         Swal.fire({
           title: "친구 삭제되었습니다.",
           icon: "warning",
         });
         queryClient.invalidateQueries(["FriendCheck"]);
         queryClient.invalidateQueries(["friendUserRankingInfo"]);
-        console.log(isFriend.result);
       })
       .catch((error) => {
         console.error(error);
@@ -126,7 +126,6 @@ export default function ProfileModal() {
   const { result }: { result: UserProfile | null } = data
     ? data
     : { result: null };
-  // console.table(result)
 
   const router = useRouter();
 

@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import logo from "@/public/src/assets/images/logo.png";
@@ -35,7 +37,7 @@ export default function Header() {
     const token = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(
-        `https://j10a207.p.ssafy.io/api/multi/ready?roomId=${params.room_id}`,
+        apiUrl(`/multi/ready?roomId=${params.room_id}`),
         {
           method: "POST",
           headers: {
@@ -58,7 +60,7 @@ export default function Header() {
     // if(numberKeys.length > 1){
     const token = sessionStorage.getItem("accessToken");
     await axios({
-      url: "https://j10a207.p.ssafy.io/api/multi/start-game",
+      url: apiUrl("/multi/start-game"),
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,7 +73,6 @@ export default function Header() {
       },
     })
       .then((res) => {
-        console.log(res);
       })
       .catch((error) => {
         console.error(error);
@@ -89,7 +90,7 @@ export default function Header() {
   function handleExit() {
     axios({
       method: "delete",
-      url: `https://j10a207.p.ssafy.io/api/multi/exit?roomId=${room_id}`,
+      url: apiUrl(`/multi/exit?roomId=${room_id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

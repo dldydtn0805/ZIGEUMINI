@@ -8,7 +8,6 @@ export default function MultiRanking() {
     const index = selectedTradeList.findIndex((item :any) => item.memberId == memberId);
     if (index == -1) {
       const foundMemberInfo = multiLogMemberDtoList.find((item: any) => item.memberId === memberId);
-      console.log(foundMemberInfo);
       if (foundMemberInfo && foundMemberInfo.multiLogTradeDtoList.length > 0) {
         const newTradeData = foundMemberInfo.multiLogTradeDtoList.map((item: any) => [
           {
@@ -21,7 +20,6 @@ export default function MultiRanking() {
         ]
       );
       const newSelectedTradeList = [...selectedTradeList];
-      console.log(newSelectedTradeList);
       newTradeData.map((item :any) => {
         newSelectedTradeList.push(item);
       })

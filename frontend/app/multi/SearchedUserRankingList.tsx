@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { easeInOut } from "framer-motion/dom";
 import { useState } from "react";
 import UserRanking from "./userRanking";
@@ -22,12 +24,11 @@ export default function SearchedUserRankingList() {
   const fetchEntireUserData = async (search: string) => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/search?nickname=${search}`,
+      url: apiUrl(`/member/search?nickname=${search}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data);
     setEntireUser(response.data.result);
   };
 

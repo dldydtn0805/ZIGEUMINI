@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import profileStore from "@/public/src/stores/profile/profileStore";
@@ -28,13 +30,12 @@ interface FriendRequestInfo {
 
 const fetchFriendRequests = async () => {
   const response = await axios({
-    url: "https://j10a207.p.ssafy.io/api/friend-ask/receive-list",
+    url: apiUrl("/friend-ask/receive-list"),
     method: "get",
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
     },
   });
-  console.log(response.data);
   return response.data;
 };
 export default function ProfileFriendRequest() {
@@ -49,7 +50,7 @@ export default function ProfileFriendRequest() {
     (nickname: string) =>
       axios({
         method: "post",
-        url: "https://j10a207.p.ssafy.io/api/friend-ask/accept",
+        url: apiUrl("/friend-ask/accept"),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -66,7 +67,7 @@ export default function ProfileFriendRequest() {
     (nickname: string) =>
       axios({
         method: "delete",
-        url: `https://j10a207.p.ssafy.io/api/friend-ask/reject?nickname=${nickname}`,
+        url: apiUrl(`/friend-ask/reject?nickname=${nickname}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -158,7 +159,6 @@ export default function ProfileFriendRequest() {
                         onClick={() => {
                           playClickSound();
                           acceptFriendRequest(item.nickname);
-                          console.log("전송");
                         }}
                       >
                         수락

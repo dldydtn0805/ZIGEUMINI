@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import axios from "axios";
 import { useQuery, UseQueryResult } from "react-query";
 import { useRouter } from "next/navigation";
@@ -21,7 +23,7 @@ export default function IsSignUpInfo() {
     }
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/privilege/check`,
+      url: apiUrl(`/member/privilege/check`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -47,14 +49,13 @@ export default function IsSignUpInfo() {
     try {
       const response = await axios({
         method: "get",
-        url: "https://j10a207.p.ssafy.io/api/alarm/login",
+        url: apiUrl("/alarm/login"),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
 
       // 요청이 성공적으로 완료되면 여기에서 응답을 처리합니다.
-      console.log(response.data);
     } catch (error) {
       // 요청이 실패하면 오류를 처리합니다.
       console.error(error);

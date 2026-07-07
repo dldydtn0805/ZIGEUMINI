@@ -1,5 +1,7 @@
 'use client'
 
+import { apiUrl } from "@/public/src/config/api";
+
 import Image from 'next/image'
 import ProfileImage from '@/public/src/assets/images/profile-person-image.png'
 import useClickSound from '@/public/src/components/clickSound/DefaultClick'
@@ -15,16 +17,14 @@ export default function GameMembers(){
   const { memberId } = userStore();
   const playClickSound = useClickSound();
   const kickUser = (id: number) => {
-    console.log(`${id}번,넌 나가라!`)
     axios({
       method: 'delete',
-      url: `https://j10a207.p.ssafy.io/api/multi/kick?roomId=${roomId}&kickMemberId=${id}`,
+      url: apiUrl(`/multi/kick?roomId=${roomId}&kickMemberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`
       }
     })
     .then((res)=> {
-      console.log(res.data)
     })
     .catch((e) => {
       console.error(e)

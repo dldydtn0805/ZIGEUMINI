@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
@@ -21,16 +23,14 @@ export default function UserRecordInfoMulti() {
   const router = useRouter();
   const params = useParams<{ userId?: string }>();
   const id: string | undefined = params.userId;
-  console.log('id : ', id);
   const fetchUserMultiGame = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/multi-game-log?memberId=${id}`,
+      url: apiUrl(`/member/multi-game-log?memberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data.result);
     return response.data;
   };
 

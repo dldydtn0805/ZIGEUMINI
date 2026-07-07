@@ -1,3 +1,4 @@
+import { hadoopUrl } from "@/public/src/config/api";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import SingleReviewStore from "@/public/src/stores/profile/SingleReviewStore";
 import axios from "axios";
@@ -13,17 +14,15 @@ export default function SingleStockTicker() {
     try {
       const response = await axios({
         method: "get",
-        url: `https://j10a207.p.ssafy.io/hadoop/stock/change-count/start-end?startDate=${startDate}&endDate=${endDate}&stockCode=${stockCode}`,
+        url: hadoopUrl(`/stock/change-count/start-end?startDate=${startDate}&endDate=${endDate}&stockCode=${stockCode}`),
         headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         }
       })
-      console.log("posneg : ", response.data.result);
       setPositiveCount(response.data.result[0].positiveCount);
       setNegativeCount(response.data.result[0].negativeCount);
       
     } catch (error) {
-      console.log("pos neg error : ", error);
     }
   }  
   const handleClickStock = async (index :number, stockCode :string) => {
@@ -33,7 +32,6 @@ export default function SingleStockTicker() {
       // fetchMaxMin(stockCode)
 
     } catch (error) {
-      console.log(error);
     }
   }
   // 해당 stockCode 값을 가진 주식 종목의 등락률 개수

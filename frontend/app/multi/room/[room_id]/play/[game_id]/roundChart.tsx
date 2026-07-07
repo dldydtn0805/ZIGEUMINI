@@ -208,7 +208,6 @@ export default function Chart({ data }: any) {
         const todayEndPriceTextMarker = plot1.textMarker(0);
         todayEndPriceTextMarker.value(purifiedData[299+day]?.endPrice);
         todayEndPriceTextMarker.text(purifiedData[299+day]?.endPrice)
-        console.log(todayEndPriceTextMarker);
         todayEndPriceTextMarker.fontColor("pink");
         todayEndPriceTextMarker.background().enabled(true);
         todayEndPriceTextMarker.background().stroke("2 pink");
@@ -519,7 +518,6 @@ export default function Chart({ data }: any) {
         (window as any).handleShowAll = handleShowAll;
         (window as any).handleShowPlot = handleShowPlot;
         handleShowPlot(selectedSecondaryIndicator);
-        // console.log("purifiedData", purifiedData[turn+249].date.split('T')[0]);
         chart.selectRange(purifiedData[day+249].date.split('T')[0], purifiedData[day+299].date.split('T')[0])
 
         return () => {

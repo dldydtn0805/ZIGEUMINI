@@ -56,7 +56,7 @@ type Store = {
   setIsLogin: (value: boolean) => void;
 };
 
-const userStore = create<Store>((set: any) => ({
+const userStore = create<Store>((set) => ({
   memberId: null,
   setMemberId: (value) => set({ memberId: value }),
   email: null,

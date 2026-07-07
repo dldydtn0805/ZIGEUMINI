@@ -64,7 +64,7 @@ type Store = {
     setSelectedTradeList :(value :any) => void, 
 };
 
-const MultiReviewStore = create<Store>((set: any) => ({
+const MultiReviewStore = create<Store>((set) => ({
     // 시작 날짜
     startDate :"", 
     setStartDate :(value) => set({ startDate : value }),

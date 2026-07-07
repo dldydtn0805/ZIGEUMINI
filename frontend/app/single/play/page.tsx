@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -81,12 +83,11 @@ export default function SinglePlay() {
     try {
       const response = await axios({
         method: "get",
-        url: "https://j10a207.p.ssafy.io/api/single",
+        url: apiUrl("/single"),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
-      console.log("response : ", response.data.result);
       if (response.data.result.day > 0) {
         setTurn(response.data.result.day);
       } else {
@@ -149,7 +150,6 @@ export default function SinglePlay() {
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsError(true);
     }
   };

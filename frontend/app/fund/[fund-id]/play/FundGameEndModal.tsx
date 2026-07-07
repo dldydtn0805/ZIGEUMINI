@@ -1,4 +1,6 @@
 'use client'
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter, useParams } from 'next/navigation'
 import FundGameStore from '@/public/src/stores/fund/game/FundGameStore';
 import axios from 'axios';
@@ -11,7 +13,7 @@ export default function FundGameEndModal ({ isOpen, onClose } :any) {
         try {
             const response = axios({
                 method: "put",
-                url : 'https://j10a207.p.ssafy.io/api/fund/close', 
+                url : apiUrl('/fund/close'), 
                 data: {
                     fundId: params['fund-id'],
                 },
@@ -19,11 +21,9 @@ export default function FundGameEndModal ({ isOpen, onClose } :any) {
                     Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
                 }
             })
-            console.log(response);
             onClose();
             router.push('/multi');
         } catch (error) {
-            console.log(error);
         }
     }
     if (!isOpen) return null;

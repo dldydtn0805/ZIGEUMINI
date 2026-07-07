@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import { create } from "zustand";
 import axios from "axios";
 
@@ -6,8 +7,8 @@ type Store = {
   setToggleTab: (value: string) => void;
   searchFriend: string;
   setSearchFriend: (value: string) => void;
-  receiveMessage: any;
-  setReceiveMessage: (value: any) => void;
+  receiveMessage: unknown[];
+  setReceiveMessage: (value: unknown[]) => void;
   sendMessage: string;
   setSendMessage: (value: string) => void;
   lobbyModal: boolean;
@@ -21,7 +22,7 @@ type Store = {
 
   stockId :number,
   setStockId :(value :number) => void;
-  stockChartList :stockChartInterface[] | any;
+  stockChartList :stockChartInterface[];
   setStockChartList :(value :stockChartInterface[]) => void;
   roundNumber :number;
   setRoundNumber :(value :number) => void;
@@ -81,7 +82,7 @@ export interface stockInfoDataInterface {
   stockChartData :stockChartDataInterface;
 }
 
-const multigameStore = create<Store>((set: any) => ({
+const multigameStore = create<Store>((set) => ({
   toggleTab: "all",
   setToggleTab: (value) => set({ toggleTab: value }),
   searchFriend: "",
@@ -113,13 +114,10 @@ const multigameStore = create<Store>((set: any) => ({
   getMultigameRoomInfo: (value: number) => {
     axios({
       method: 'post',
-      url: `https://j10a207.p.ssafy.io/api/multi/room-info?roomId=${value}`,
+      url: apiUrl(`/multi/room-info?roomId=${value}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`
       }
-    })
-    .then((res)=> {
-      console.log(res.data)
     })
     .catch((e)=> {
       console.error(e)

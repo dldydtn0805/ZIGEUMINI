@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
@@ -26,7 +28,7 @@ export default function UserRecordInfoSingle() {
   const fetchUserSingleGame = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/member/single-game-log?memberId=${id}`,
+      url: apiUrl(`/member/single-game-log?memberId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },

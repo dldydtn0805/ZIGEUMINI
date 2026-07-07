@@ -1,6 +1,7 @@
+import { apiUrl } from "@/public/src/config/api";
 import { useEffect } from "react";
 import axios from "axios";
-import userStore from "../stores/user/userStore";
+import userStore, { UserInfo } from "../stores/user/userStore";
 
 export default function useFetchUserInfo() {
   const {
@@ -20,9 +21,9 @@ export default function useFetchUserInfo() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const response = await axios({
+        const response = await axios<UserInfo>({
           method: "get",
-          url: `https://j10a207.p.ssafy.io/api/member`,
+          url: apiUrl(`/member`),
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
           },
@@ -39,7 +40,6 @@ export default function useFetchUserInfo() {
         setSingleAvgRoi(response.data.result.singleAvgRoi);
         setWin(response.data.result.win);
       } catch (error) {
-        console.log("에러발생", error);
         throw error;
       }
     }

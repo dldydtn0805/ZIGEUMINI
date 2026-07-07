@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 import FundSettlementModal from "./fund/fundSettlementModal";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
@@ -29,13 +31,12 @@ export default function NavbarAlarmModal() {
 
   const fewtchMyNotification = async () => {
     const response = await axios({
-      url: `https://j10a207.p.ssafy.io/api/alarm/my-notification`,
+      url: apiUrl(`/alarm/my-notification`),
       method: `get`,
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data);
     return response.data;
   };
 

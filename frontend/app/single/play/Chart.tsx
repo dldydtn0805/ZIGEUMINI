@@ -260,7 +260,6 @@ export default function Chart({ data }: any) {
             });
 
         } else {
-            console.log(0);
         }
 
         // line series 생성

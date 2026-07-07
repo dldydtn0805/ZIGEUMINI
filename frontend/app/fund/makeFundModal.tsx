@@ -1,5 +1,7 @@
 'use client'
 
+import { apiUrl } from "@/public/src/config/api";
+
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -22,7 +24,7 @@ interface NewFund {
 
 const createFund = async(fund: NewFund) => {
   const token = sessionStorage.getItem('accessToken')
-  const { data } = await axios.post(`https://j10a207.p.ssafy.io/api/fund/open`,fund,{
+  const { data } = await axios.post(apiUrl(`/fund/open`),fund,{
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -64,7 +66,7 @@ export default function MakeFundModal({isOpen, onClose}: any){
       headers: {
         Authorization: `Bearer ${token}`
       },
-      url: 'https://j10a207.p.ssafy.io/api/fund/fundname/check',
+      url: apiUrl('/fund/fundname/check'),
       params: {
         fundName: funName,
       }
@@ -105,7 +107,6 @@ export default function MakeFundModal({isOpen, onClose}: any){
   = useMutation(createFund
     ,{
       onSuccess: (response) => {
-        console.log(response)
         let fundNumber = response.result
         Swal.fire({
           title: "펀드 개설에 성공하였습니다.",

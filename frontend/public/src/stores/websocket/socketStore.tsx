@@ -1,4 +1,5 @@
 import { CompatClient } from "@stomp/stompjs";
+import { MutableRefObject } from "react";
 import { create } from "zustand";
 
 export interface ParticipantsType {
@@ -24,7 +25,7 @@ interface TradeListType {
   profit: number;
   round: number;
   stockId: number;
-  tradeType: String;
+  tradeType: string;
 }
 
 interface PlayersType {
@@ -34,17 +35,22 @@ interface PlayersType {
   totalAsset: number;
 }
 
+type SocketMessage = {
+  type: string;
+  result?: unknown;
+};
+
 interface WebSocketStore {
-  clientObject: any;
-  setClientObject: (client: any) => void;
-  receiveMessages: any;
-  setReceiveMessages: (receiveMessages: any) => void;
-  addReceiveMessages: (receiveMessages: any) => void;
+  clientObject: MutableRefObject<CompatClient> | null;
+  setClientObject: (client: MutableRefObject<CompatClient>) => void;
+  receiveMessages: SocketMessage[];
+  setReceiveMessages: (receiveMessages: SocketMessage[]) => void;
+  addReceiveMessages: (receiveMessages: SocketMessage) => void;
   deleteReceiveMessages: () => void;
-  receiveAlarm: any;
-  setReceiveAlarm: (receiveAlarm: any) => void;
-  roomInfo: any;
-  setRoomInfo: (roomInfo: any) => void;
+  receiveAlarm: boolean;
+  setReceiveAlarm: (receiveAlarm: boolean) => void;
+  roomInfo: unknown[];
+  setRoomInfo: (roomInfo: unknown[]) => void;
   hostId: number;
   setHostId: (hostId: number) => void;
   participants: ParticipantsType[];
@@ -108,7 +114,7 @@ const socketStore = create<WebSocketStore>((set) => ({
   setClientObject: (value) => set({ clientObject: value }),
   receiveMessages: [],
   setReceiveMessages: (value) => set({ receiveMessages: value }),
-  addReceiveMessages: (value: any) =>
+  addReceiveMessages: (value) =>
     set((state) => ({
       receiveMessages: [...state.receiveMessages, value],
     })),

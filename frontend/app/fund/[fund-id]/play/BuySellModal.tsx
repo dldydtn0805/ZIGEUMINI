@@ -1,4 +1,6 @@
 'use client'
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import FundGameStore from "@/public/src/stores/fund/game/FundGameStore";
 import axios from "axios";
@@ -45,7 +47,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
         if (isBuy) {
             if (num == 25) {
                 // const stockNumber = totalAssetData.cash
-                // console.log(Math.floor(totalAssetData?.cash/stockListData[selectedStockIndex]?.stockChartList[300+turn].endPrice * 0.25));
                 setStocks(Math.floor(maxAvailableBuy * 0.25))
                 if (Math.floor(maxAvailableBuy * 0.25) > 0) {
                     setDisabled(false);
@@ -53,7 +54,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 50) {
-                // console.log(Math.floor(totalAssetData?.cash/stockListData[selectedStockIndex]?.stockChartList[300+turn].endPrice * 0.5))
                 setStocks(Math.floor(maxAvailableBuy * 0.5))
                 if (Math.floor(maxAvailableBuy * 0.5) > 0) {
                     setDisabled(false);
@@ -61,7 +61,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 75) {
-                // console.log(Math.floor(totalAssetData?.cash/stockListData[selectedStockIndex]?.stockChartList[300+turn].endPrice * 0.75))
                 setStocks(Math.floor(maxAvailableBuy * 0.75))
                 if (Math.floor(maxAvailableBuy * 0.75) > 0) {
                     setDisabled(false);
@@ -69,7 +68,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 100) {
-                // console.log(Math.floor(totalAssetData?.cash/stockListData[selectedStockIndex]?.stockChartList[300+turn].endPrice ))
                 setStocks(maxAvailableBuy)
                 if (maxAvailableBuy > 0) {
                     setDisabled(false);
@@ -81,7 +79,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
         else if (!isBuy) {
             if (num == 25) {
                 // const stockNumber = totalAssetData.cash
-                // console.log(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.25))
                 setStocks(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.25))
                 if (Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.25) > 0) {
                     setDisabled(false);
@@ -89,7 +86,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 50) {
-                // console.log(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.5))
                 setStocks(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.5))
                 if (Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.5) > 0) {
                     setDisabled(false);
@@ -97,7 +93,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 75) {
-                // console.log(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.75))
                 setStocks(Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.75))
                 if (Math.floor(assetListData[selectedStockIndex]?.stockAmount * 0.75) > 0) {
                     setDisabled(false);
@@ -105,7 +100,6 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     setDisabled(true);
                 }
             } else if (num == 100) {
-                console.log(assetListData[selectedStockIndex]?.stockAmount)
                 setStocks(assetListData[selectedStockIndex]?.stockAmount)
                 if (assetListData[selectedStockIndex]?.stockAmount > 0) {
                     setDisabled(false);
@@ -123,19 +117,10 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
     }
 
     const handleBuy = async () => {
-        // console.log("stocks : ", stocks);
-        console.log(stockListData[selectedStockIndex].stockChartList[299+turn].endPrice);
-        console.log({
-            fundId: Number(params['fund-id']),
-            gameIdx: gameIdx,
-            stockId: stockListData[selectedStockIndex]?.stockId,
-            amount: stocks,
-            day: turn, 
-        })
         try {
             const response = await axios({
                 method: "post",
-                url: "https://j10a207.p.ssafy.io/api/fund/game/buy",
+                url: apiUrl("/fund/game/buy"),
                 data: {
                     fundId: Number(params['fund-id']),
                     gameIdx: gameIdx,
@@ -147,23 +132,20 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
                 },
             });
-            console.log("매수 : ", response.data);
             setAssetListData(response.data.result.assetList);
             setTotalAssetData(response.data.result.totalAsset);
             setTradeListData(response.data.result.tradeList);
             handleEscape();
         
         } catch (error) {
-            console.log("Buy Error : ", error);
         }
       };
 
     const handleSell = async () => {
-        console.log("stocks : ", stocks);
         try {
             const response = await axios({
                 method: "post",
-                url: "https://j10a207.p.ssafy.io/api/fund/game/sell",
+                url: apiUrl("/fund/game/sell"),
                 data: {
                     fundId: Number(params['fund-id']),
                     gameIdx: gameIdx,
@@ -175,13 +157,11 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
                     Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
                 }
             });
-            console.log("매도 : ", response.data.result);
             setAssetListData(response.data.result.assetList);
             setTotalAssetData(response.data.result.totalAsset);
             setTradeListData(response.data.result.tradeList);
             handleEscape();
         } catch (error) {
-            console.log("Sell Error : ", error);
         }
     } 
 

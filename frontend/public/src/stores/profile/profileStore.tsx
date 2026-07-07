@@ -18,16 +18,16 @@ type Store = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   friendRequests: FriendRequestType[];
-  setFriendRequests: (value: any[]) => void;
+  setFriendRequests: (value: FriendRequestType[]) => void;
   isSentOpen: boolean;
   setIsSentOpen: (value: boolean) => void;
   sentFriendRequests: SentFriendRequestType[];
-  setSentFriendRequests: (value: any[]) => void;
+  setSentFriendRequests: (value: SentFriendRequestType[]) => void;
   isBoardOpen: null | number;
   setIsBoardOpen: (value: number | null) => void;
 };
 
-const profileStore = create<Store>((set: any) => ({
+const profileStore = create<Store>((set) => ({
   toggleButton: "single",
   setToggleButton: (value) => set({ toggleButton: value }),
   isOpen: false,

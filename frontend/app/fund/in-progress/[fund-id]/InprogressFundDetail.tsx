@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import Image from "next/image";
 import ProfileImage from "@/public/src/assets/images/profile-person-image.png";
 import type {
@@ -15,7 +17,7 @@ import userStore from "@/public/src/stores/user/userStore";
 const fetchFundDetail = async (fundId: string) => {
   const token = sessionStorage.getItem("accessToken");
   const response = await fetch(
-    `https://j10a207.p.ssafy.io/api/fund/fund-detail?fundId=${fundId}`,
+    apiUrl(`/fund/fund-detail?fundId=${fundId}`),
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,7 +57,6 @@ export default function InprogressFundDetail() {
   const { result }: { result: FundDetail | null } = data
     ? data
     : { result: null };
-  console.table(result);
 
   const fundManager = result?.managerNickname
   const totalInvestment = result?.fundStocks.reduce(

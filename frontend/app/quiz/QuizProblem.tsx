@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useEffect, useState } from "react";
 import quizStore from "@/public/src/stores/quiz/quizStore";
 import Router from "next/router";
@@ -26,13 +28,12 @@ export default function QuizProblem() {
 
   const fetchShowMeTheMoney = async () => {
     const response = await axios({
-      url: `https://j10a207.p.ssafy.io/api/quiz/update`,
+      url: apiUrl(`/quiz/update`),
       method: "put",
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data);
     return response;
   };
 
@@ -45,12 +46,11 @@ export default function QuizProblem() {
   const fetchQuizData = async () => {
     const response = await axios({
       method: "get",
-      url: "https://j10a207.p.ssafy.io/api/quiz",
+      url: apiUrl("/quiz"),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data.result);
     return response.data;
   };
 

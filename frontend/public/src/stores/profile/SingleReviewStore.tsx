@@ -119,7 +119,7 @@ type Store = {
 
 };
 
-const SingleReviewStore = create<Store>((set: any) => ({
+const SingleReviewStore = create<Store>((set) => ({
     selectedIndex: 0,
     setSelectedIndex: (value) => set({ selectedIndex : value }),
 

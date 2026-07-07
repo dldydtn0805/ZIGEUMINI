@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import UserRanking from "./userRanking";
 import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
@@ -15,7 +17,7 @@ export interface userInfo {
 }
 
 const fetchFriendUserRankingInfo = async() => {
-  const response = await fetch(`https://j10a207.p.ssafy.io/api/friend/list`,
+  const response = await fetch(apiUrl(`/friend/list`),
   {
     headers: {
       'Authorization': `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -41,7 +43,6 @@ export default function FriendUserRankingList() {
   const { result }: { result: userType[] | null } = data
     ? data
     : { result: null };
-  // console.log(result);
 
   return (
     <>

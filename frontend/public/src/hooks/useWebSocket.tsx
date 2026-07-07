@@ -1,20 +1,69 @@
+import { apiUrl, SOCKET_URL } from "@/public/src/config/api";
 // useWebSocket.ts
-import { useEffect, useRef, useState } from "react";
-import { CompatClient, Stomp } from "@stomp/stompjs";
+import { useEffect, useRef } from "react";
+import { CompatClient, IMessage, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import Swal from "sweetalert2";
 import userStore from "../stores/user/userStore";
 import socketStore from "../stores/websocket/socketStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
+
+type ReadyState = Record<number, boolean>;
+
+type SocketParticipant = {
+  memberId: number;
+  nickname: string;
+  gameRoi: number;
+  rankPoint: number;
+  win: number;
+  lose: number;
+  asset: number;
+  currentRank: number;
+};
+
+type MultiGameStockId = {
+  firstDayStockChartId: number;
+  stockId: number;
+};
+
+type SocketPlayer = {
+  nickName: string;
+  day: number;
+  rank: number;
+  totalAsset: number;
+};
+
+type SocketMessageResult = {
+  hostId?: number;
+  participants?: SocketParticipant[];
+  roomId?: number;
+  roomTitle?: string;
+  readyState?: ReadyState;
+  maxRoundNumber?: number;
+  inviterNickname?: string;
+  gameId?: number;
+  multiGameStockIds?: MultiGameStockId[];
+};
+
+type SocketMessage = {
+  type:
+    | "MESSAGE"
+    | "EXIT"
+    | "ROOMINFO"
+    | "INVITE"
+    | "FRIENDASK"
+    | "KICKED"
+    | "START"
+    | "MULTIGAMEINFO"
+    | "MULTIRESULT";
+  result?: SocketMessageResult | SocketPlayer[];
+};
+
 export const useWebSocket = () => {
-  const params = useParams();
   const client = useRef<CompatClient>({} as CompatClient);
   const { setClientObject, clientObject, setResultNumberCount } = socketStore();
   const { memberId, nickname } = userStore();
-  const [receiveMessage, setReceiveMessage] = useState<any>([]);
-  const [receiveInvitation, setReceiveInvitation] = useState<any>([]);
   const {
     receiveMessages,
     setReceiveMessages,
@@ -47,7 +96,7 @@ export const useWebSocket = () => {
     try {
       const response = await axios({
         method: "get",
-        url: "https://j10a207.p.ssafy.io/api/alarm/unread-notification-count",
+        url: apiUrl("/alarm/unread-notification-count"),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -68,37 +117,36 @@ export const useWebSocket = () => {
     if (memberId) {
       fetchAlarmData();
       client.current = Stomp.over(() => {
-        const sock = new SockJS("https://j10a207.p.ssafy.io/ws");
+        const sock = new SockJS(SOCKET_URL);
         return sock;
       });
       Swal.fire(`${nickname}님 환영합니다.`);
       setClientObject(client);
       client.current.connect({}, () => {
-        client.current.subscribe(`/api/sub/${memberId}`, (message: any) => {
-          const parsedMessage = JSON.parse(message.body);
-          console.log(parsedMessage);
+        client.current.subscribe(`/api/sub/${memberId}`, (message: IMessage) => {
+          const parsedMessage = JSON.parse(message.body) as SocketMessage;
+          const messageResult =
+            parsedMessage.result && !Array.isArray(parsedMessage.result)
+              ? parsedMessage.result
+              : undefined;
           // Swal.fire(`${parsedMessage.type} 신호 감지!`);
           if (parsedMessage.type === "MESSAGE") {
             addReceiveMessages(parsedMessage);
           }
 
-          if (parsedMessage.type === "EXIT") {
-            console.log(parsedMessage);
-          }
-
           if (parsedMessage.type === "ROOMINFO") {
-            setHostId(parsedMessage.result.hostId);
-            setParticipants(parsedMessage.result.participants);
-            setRoomId(parsedMessage.result.roomId);
-            setRoomTitle(parsedMessage.result.roomTitle);
-            setReadyState(parsedMessage.result.readyState);
-            setMaxRoundNumber(parsedMessage.result.maxRoundNumber);
+            setHostId(messageResult?.hostId ?? 0);
+            setParticipants(messageResult?.participants ?? []);
+            setRoomId(messageResult?.roomId ?? 0);
+            setRoomTitle(messageResult?.roomTitle ?? "");
+            setReadyState(messageResult?.readyState ?? {});
+            setMaxRoundNumber(messageResult?.maxRoundNumber ?? 0);
           }
 
           if (parsedMessage.type === "INVITE") {
             Swal.fire({
               title: "친구 초대",
-              text: `${parsedMessage.result.inviterNickname}님이 초대하셨습니다.`,
+              text: `${messageResult?.inviterNickname ?? "친구"}님이 초대하셨습니다.`,
               icon: "info",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -111,7 +159,7 @@ export const useWebSocket = () => {
                   icon: "success",
                 });
                 axios({
-                  url: `https://j10a207.p.ssafy.io/api/multi/${parsedMessage.result.roomId}`,
+                  url: apiUrl(`/multi/${messageResult?.roomId ?? 0}`),
                   method: "get",
                   headers: {
                     Authorization: `Bearer ${sessionStorage.getItem(
@@ -119,7 +167,7 @@ export const useWebSocket = () => {
                     )}`,
                   },
                 });
-                router.push(`/multi/room/${parsedMessage.result.roomId}`);
+                router.push(`/multi/room/${messageResult?.roomId ?? 0}`);
               }
             });
           }
@@ -133,17 +181,17 @@ export const useWebSocket = () => {
           }
 
           if (parsedMessage.type === "START") {
-            setGameId(parsedMessage.result.gameId);
-            setMultiGameStockIds(parsedMessage.result.multiGameStockIds);
-            setRoomId(parsedMessage.result.roomId);
+            setGameId(messageResult?.gameId ?? 0);
+            setMultiGameStockIds(messageResult?.multiGameStockIds ?? []);
+            setRoomId(messageResult?.roomId ?? 0);
             setDay(1);
             router.push(
-              `${parsedMessage.result.roomId}/play/${parsedMessage.result.gameId}`
+              `${messageResult?.roomId ?? 0}/play/${messageResult?.gameId ?? 0}`
             );
           }
 
           if (parsedMessage.type === "MULTIGAMEINFO") {
-            setPlayers(parsedMessage.result);
+            setPlayers(Array.isArray(parsedMessage.result) ? parsedMessage.result : []);
           }
 
           if (parsedMessage.type === "MULTIRESULT") {

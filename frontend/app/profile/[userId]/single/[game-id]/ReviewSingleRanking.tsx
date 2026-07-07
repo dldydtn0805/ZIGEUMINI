@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState } from "react";
 import RankingUserChartModal from "./RankingUserChartModal";
 import SingleReviewStore from "@/public/src/stores/profile/SingleReviewStore";
@@ -19,7 +21,7 @@ export default function SingleRanking() {
     try {
       const response = await axios({
         method: "get",
-        url: `https://j10a207.p.ssafy.io/api/single/log/member?singelGameStockId=${item.singleGameStockId}&memberId=${item.memberId}`,
+        url: apiUrl(`/single/log/member?singelGameStockId=${item.singleGameStockId}&memberId=${item.memberId}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -31,11 +33,9 @@ export default function SingleRanking() {
         stockChartList: response.data.result.stockChartList,
         tradeList: response.data.result.tradeList,
       };
-      console.log(res);
       setRankingUserData(res);
       handleOpenModal();
     } catch (error) {
-      console.log(error);
     }
   };
 

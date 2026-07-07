@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -57,7 +59,7 @@ export default function MakeRoomModal({ isOpen, onClose }: any) {
     
   const token = sessionStorage.getItem("accessToken");
     try {
-      const response = await fetch("https://j10a207.p.ssafy.io/api/multi/create-room",{
+      const response = await fetch(apiUrl("/multi/create-room"),{
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -67,7 +69,6 @@ export default function MakeRoomModal({ isOpen, onClose }: any) {
       })
       
       const result = await response.json();
-      console.log(result)
       const roomId = result.result.roomId
       router.push(`multi/room/${roomId}`)
     } catch (error) {

@@ -16,9 +16,9 @@ type Store = {
   setData: (value: Quiz[]) => void;
 };
 
-const quizStore = create<Store>((set: any) => ({
+const quizStore = create<Store>((set) => ({
   success: 0,
-  setSuccess: (value: any) => set({ success: value }),
+  setSuccess: (value) => set({ success: value }),
   page: 0,
   setPage: (value) => set({ page: value }),
   data: [
@@ -53,7 +53,7 @@ const quizStore = create<Store>((set: any) => ({
       answer: 3,
     },
   ],
-  setData: (value) => set({ page: value }),
+  setData: (value) => set({ data: value }),
 }));
 
 export default quizStore;

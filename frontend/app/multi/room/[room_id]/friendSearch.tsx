@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import SearchBar from "../../searchBar";
 import Image from "next/image";
 import ProfileImage from "@/public/src/assets/images/profile-image.png";
@@ -13,7 +14,7 @@ import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 
 const fetchFriendInfo = async () => {
   const token = sessionStorage.getItem("accessToken");
-  const response = await fetch("https://j10a207.p.ssafy.io/api/friend/list", {
+  const response = await fetch(apiUrl("/friend/list"), {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -32,13 +33,12 @@ export default function FriendSearch() {
   const invitationRequest = async (request: any) => {
     const response = await axios({
       method: "post",
-      url: "https://j10a207.p.ssafy.io/api/multi/invite",
+      url: apiUrl("/multi/invite"),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
       data: request,
     });
-    console.log(response.data);
     return response.data;
   };
 
@@ -49,7 +49,6 @@ export default function FriendSearch() {
       roomId: room_id,
       receiver: friend.memberId,
     };
-    console.log();
     invitationRequest(data);
     Swal.fire({
       text: `${friend.nickname}님에게 초대를 발송했습니다.`,
@@ -64,7 +63,6 @@ export default function FriendSearch() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  // console.log(result);
   return (
     <div className="row-span-4 border-e grid grid-rows-12">
       <div className="row-span-1 flex justify-center bg-small-6 text-xl text-textColor-2 border-b gap-2 items-center">

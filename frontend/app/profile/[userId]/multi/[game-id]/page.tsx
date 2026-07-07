@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useQuery, QueryClient, QueryClientProvider } from "react-query";
@@ -55,21 +57,13 @@ export default function page() {
     try {
       const response = await axios({
         method: "get",
-        url: ` https://j10a207.p.ssafy.io/api/multi/log?multiGameLogId=${multiGameLogId}`,
+        url: apiUrl(`/multi/log?multiGameLogId=${multiGameLogId}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
 
-      // console.log("받아온 데이터 : ", response.data.result);
       // 주식 코드
-      console.log("시작 날짜(startDate) : ", response.data.result.startDate.split('T')[0]);
-      console.log("끝 날짜(endDate) : ", response.data.result.endDate.split('T')[0]);
-      console.log("종목 코드(stockCode) : ", response.data.result.stockCode);
-      console.log("종목 이름(stockName) : ", response.data.result.stockName);
-      console.log("종목 날짜별 데이터 (stockChartDtoList) : ", response.data.result.stockChartDtoList);
-      console.log("내 매매기록(multiLogTradeDtoList) : ", response.data.result.multiLogTradeDtoList);
-      console.log("친구들 정보(multiLogMemberDtoList) : ", response.data.result.multiLogMemberDtoList);
       setStartDate(response.data.result.startDate.split('T')[0]);
       setEndDate(response.data.result.endDate.split('T')[0]);
       setStockCode(response.data.result.stockCode);
@@ -81,7 +75,6 @@ export default function page() {
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
       setIsError(true);
     }
   };

@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import userStore from "@/public/src/stores/user/userStore";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -96,7 +98,7 @@ export default function TradeModal({ tradeType, isOpen, onClose }: any) {
     if (tradeStocksAmount > 0) {
       axios({
         method: "post",
-        url: `https://j10a207.p.ssafy.io/api/multi/${tradeType}`,
+        url: apiUrl(`/multi/${tradeType}`),
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
@@ -108,7 +110,6 @@ export default function TradeModal({ tradeType, isOpen, onClose }: any) {
         },
       })
         .then((res) => {
-          // console.log(res.data);
           if (res.data.result != undefined) {
             setAveragePrice(res.data.result.averagePrice);
             setCash(res.data.result.cash);

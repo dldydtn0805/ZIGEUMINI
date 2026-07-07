@@ -175,7 +175,7 @@ type Store = {
 };
 
 
-const SingleGameStore = create<Store>((set: any) => ({
+const SingleGameStore = create<Store>((set) => ({
 
     // 해당 게임 log id
     gameIdx: 0,

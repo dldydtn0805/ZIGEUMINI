@@ -1,5 +1,7 @@
 'use client'
 
+import { apiUrl } from "@/public/src/config/api";
+
 import { useRouter } from "next/navigation"
 import { useQuery, UseQueryResult } from "react-query";
 import type { FundResult } from "@/public/src/stores/fund/crud/FundCrudStore";
@@ -10,7 +12,7 @@ import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 
 const fetchFundInfo = async() => {
     const token = sessionStorage.getItem('accessToken')
-    const response = await fetch('https://j10a207.p.ssafy.io/api/fund/investing-list',
+    const response = await fetch(apiUrl('/fund/investing-list'),
     {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -49,7 +51,6 @@ export default function FundTable(){
   }
 
   const { result }: {result: FundResult[] | null} = data ? data: {result: null};
-  // console.log(result)
   return (
     <div className="overflow-auto shadow-md sm:rounded-lg" style={{height: 'calc(50vh)'}}>
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

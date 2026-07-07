@@ -1,3 +1,4 @@
+import { apiUrl } from "@/public/src/config/api";
 import Image from "next/image";
 import penguin from "./../../public/src/assets/images/penguin.png";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,14 +17,13 @@ export default function BoardSend() {
   const sendBoard = async (formData: FormData): Promise<AxiosResponse<any>> => {
     const response = await axios({
       method: "post",
-      url: `https://j10a207.p.ssafy.io/api/community/write-multi?loginUserId=${memberId}`,
+      url: apiUrl(`/community/write-multi?loginUserId=${memberId}`),
       data: formData,
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
     return response;
   };
 

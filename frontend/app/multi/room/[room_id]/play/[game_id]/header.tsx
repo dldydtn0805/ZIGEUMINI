@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import logo from "@/public/src/assets/images/logo.png";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -50,7 +52,7 @@ export default function Header() {
   const { resultNumberCount } = socketStore();
   const fetchEndGame = async () => {
     const response = await axios({
-      url: "https://j10a207.p.ssafy.io/api/multi/round-result",
+      url: apiUrl("/multi/round-result"),
       method: "post",
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
@@ -62,7 +64,6 @@ export default function Header() {
         multiGameLogId: multiGameLogId,
       },
     });
-    console.log(response.data);
     return response.data;
   };
   const [flag, setFlag] = useState(true);
@@ -75,7 +76,6 @@ export default function Header() {
 
       if (remaining <= 0) {
         clearInterval(interval);
-        console.log("Countdown finished!");
         fetchEndGame();
       } else {
         if (flag) {
@@ -95,7 +95,7 @@ export default function Header() {
   function handleTomorrow(day: number) {
     axios({
       method: "post",
-      url: "https://j10a207.p.ssafy.io/api/multi/tomorrow",
+      url: apiUrl("/multi/tomorrow"),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -106,7 +106,6 @@ export default function Header() {
       },
     })
       .then((res) => {
-        // console.log("다음턴! : ", res.data);
         if (res.data.result.nextDayInfo != undefined) {
           setAveragePrice(res.data.result.nextDayInfo.averagePrice);
           setCash(res.data.result.nextDayInfo.cash);

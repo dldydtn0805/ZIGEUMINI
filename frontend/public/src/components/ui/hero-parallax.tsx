@@ -1,4 +1,6 @@
 "use client";
+
+import { API_ORIGIN } from "@/public/src/config/api";
 import React from "react";
 import {
   motion,
@@ -105,7 +107,7 @@ export const HeroParallax = ({
 export const Header = () => {
   const loginHandler = () => {
     if (typeof window !== "undefined") {
-      const API_URL = "https://j10a207.p.ssafy.io";
+      const API_URL = API_ORIGIN;
       const KAKAO_AUTH_URL = `${API_URL}/oauth2/authorization/kakao`;
       window.location.href = KAKAO_AUTH_URL;
     }

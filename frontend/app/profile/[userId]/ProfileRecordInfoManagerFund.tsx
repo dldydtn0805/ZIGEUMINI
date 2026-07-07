@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter, useParams } from "next/navigation";
 import { useQuery, UseQueryResult } from "react-query";
 import axios from "axios";
@@ -35,7 +37,7 @@ export default function UserRecordInfoManagerFund() {
   const fetchFundManagerBoard = async () => {
     const response = await axios({
       method: "get",
-      url: `https://j10a207.p.ssafy.io/api/fund/other-managing-list?managerId=${id}`,
+      url: apiUrl(`/fund/other-managing-list?managerId=${id}`),
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       },
@@ -57,7 +59,6 @@ export default function UserRecordInfoManagerFund() {
     ? data
     : { result: null };
 
-  console.log(result);
   return (
     <div
       className="shadow row-span-5 overflow-auto p-4 "

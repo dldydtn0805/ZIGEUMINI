@@ -1,5 +1,7 @@
 "use client";
 
+import { apiUrl } from "@/public/src/config/api";
+
 import multigameStore, {
   MultiGameRoomInfoList,
 } from "@/public/src/stores/multi/MultiGameStore";
@@ -19,7 +21,6 @@ export default function GameRoom(props: {
   const password = room.password;
   const router = useRouter();
   const handleClick = (room: MultiGameRoomInfoList) => {
-    console.log(room);
     if (room.participantsIds.length == 6) {
       Swal.fire({
         title: "정원이 가득 찼습니다.",
@@ -43,13 +44,12 @@ export default function GameRoom(props: {
         if (result.isConfirmed) {
           if (Number(result.value) === password) {
             axios
-              .get(`https://j10a207.p.ssafy.io/api/multi/${room.roomId}`, {
+              .get(apiUrl(`/multi/${room.roomId}`), {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               })
               .then((res) => {
-                console.log(res.data);
                 router.push(`multi/room/${room.roomId}`);
               })
               .catch((error) => {
@@ -65,13 +65,12 @@ export default function GameRoom(props: {
       });
     } else {
       axios
-        .get(`https://j10a207.p.ssafy.io/api/multi/${room.roomId}`, {
+        .get(apiUrl(`/multi/${room.roomId}`), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
-          console.log(res.data);
         })
         .catch((error) => {
           console.error(error);

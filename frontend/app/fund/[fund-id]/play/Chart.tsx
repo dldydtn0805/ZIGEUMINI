@@ -231,7 +231,6 @@ export default function Chart({ data }: any) {
     //     avgPriceLineMarker.listen("mouseOut", function() {
     //         avgPriceLineMarker.stroke({thickness: 2, color: "black"});
     //     });
-    //     console.log(assetListData[selectedStockIndex].averagePurchasePrice)
         
     //     const avgPriceTextMarker = plot1.textMarker(1);
     //     avgPriceTextMarker.value(avgPrice);
@@ -260,7 +259,6 @@ export default function Chart({ data }: any) {
     //     });
 
     // } else {
-    //     console.log(0);
     // }
 
     // line series 생성
@@ -545,7 +543,6 @@ export default function Chart({ data }: any) {
     (window as any).handleShowAll = handleShowAll;
     (window as any).handleShowPlot = handleShowPlot;
     handleShowPlot(selectedSecondaryIndicator);
-    // console.log("purifiedData", purifiedData[turn+249].date.split('T')[0]);
     chart.selectRange(purifiedData[turn+249].date.split('T')[0], purifiedData[turn+299].date.split('T')[0])
     // chart.selectRange(anychart.format.dateTime(new Date(startDate), 'yyyy-MM-dd'), anychart.format.dateTime(new Date(endDate), 'yyyy-MM-dd'))  
     // chart.scroller().listen('scrollerChange', function () {

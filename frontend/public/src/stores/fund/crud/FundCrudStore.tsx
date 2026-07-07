@@ -67,7 +67,7 @@ type Store = {
 }
 
 
-const fundCrudStore = create<Store>((set: any) => ({
+const fundCrudStore = create<Store>((set) => ({
   toggleButton: 'recruiting',
   setToggleButton: (value) =>set({toggleButton: value}),
   searchQuery: '',

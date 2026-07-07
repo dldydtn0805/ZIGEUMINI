@@ -1,4 +1,6 @@
 "use client";
+
+import { apiUrl } from "@/public/src/config/api";
 import { useRouter } from "next/navigation";
 import MakeRoomModal from "./makeRoomModal";
 import { useEffect, useState } from "react";
@@ -16,7 +18,7 @@ import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 const fetchMultiRoomInfo = async (pageNumber: number) => {
   const token = sessionStorage.getItem("accessToken");
   const response = await fetch(
-    `https://j10a207.p.ssafy.io/api/multi?pageNumber=${pageNumber}`,
+    apiUrl(`/multi?pageNumber=${pageNumber}`),
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -58,13 +60,12 @@ export default function GameRoomSetting() {
 
   const handleQuickstart = () => {
     playClickSound();
-    axios.get('https://j10a207.p.ssafy.io/api/multi/1', {
+    axios.get(apiUrl('/multi/1'), {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`
       }
     })
     .then((res)=> {
-      console.log(res.data)
     })
     .catch((e)=> {
       console.error(e)
@@ -83,7 +84,6 @@ export default function GameRoomSetting() {
   const { result }: { result: ResultType | null } = data
     ? data
     : { result: null };
-  console.log(result)
   const totalwaitRooms = result ? result.totalWaitRoomCounts : 0;
   const totalGameRooms = result ? result.totalGameRoomCounts : 0;
   return (

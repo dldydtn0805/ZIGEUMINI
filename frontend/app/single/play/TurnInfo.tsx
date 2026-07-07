@@ -1,4 +1,6 @@
 'use client'
+
+import { apiUrl } from "@/public/src/config/api";
 // 턴 정보, 매수 + 매도 버튼 컴포넌트
 import { useState, useEffect } from 'react';
 import SingleGameStore from '@/public/src/stores/single/SingleGameStore';
@@ -38,7 +40,7 @@ export default function TurnInfo () {
             const response = await axios(
                 {
                     method: "post",
-                    url : 'https://j10a207.p.ssafy.io/api/single/tomorrow', 
+                    url : apiUrl('/single/tomorrow'), 
                     data: {
                         gameIdx: gameIdx,
                         day: turn+1
@@ -47,10 +49,8 @@ export default function TurnInfo () {
                         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
                     }
                 })
-            console.log("다음턴 : ", response.data.result);
             if (turn == 50) {
                 const stockInfoDtoList = response.data.result.stockInfoDtoList;
-                console.log("끝남!", stockInfoDtoList)
                 setSingleGameEndInfoData({
                     initialAsset :stockInfoDtoList.initialAsset,
                     finalAsset :stockInfoDtoList.finalAsset,
@@ -83,7 +83,6 @@ export default function TurnInfo () {
             }
 
         } catch (error) {
-            console.log(error);
         }
     }
     
@@ -100,7 +99,6 @@ export default function TurnInfo () {
     const handleNextTurn = (e :KeyboardEvent) => {
         if (e.key == 'r' && !isBuySellModalOpen) {
             handleClickTurn();
-            console.log('누름')
         }
     }
     
