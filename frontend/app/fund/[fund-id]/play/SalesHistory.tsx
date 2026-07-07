@@ -7,7 +7,7 @@ export default function SalesHistory () {
     const { tradeListData } = FundGameStore();
 
     return (
-        <div className="row-span-1 grid grid-rows-6">
+    <div className="row-span-1 grid grid-rows-6">
             <div className="row-span-1 flex items-center justify-between pl-2">
                 <div className="rounded-t-lg bg-small-12 text-textColor-2"><span className="mx-1">매매 내역</span></div>
             </div>

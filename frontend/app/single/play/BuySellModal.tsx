@@ -199,7 +199,7 @@ export default function BuySellModal({ isBuy } :{ isBuy :boolean }) {
 
     if (!isBuySellModalOpen) return null;
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="text-center bg-big-1 rounded shadow-lg grid grid-rows-12" style={{ width: '500px', height: '600px' }}>
                 <div className="row-span-2 flex items-center justify-center text-5xl">
                     {

@@ -28,7 +28,7 @@ export default function StockList () {
         }
     }, [isBuySellModalOpen])
     return (
-        <div className="row-start-2 row-end-5 grid grid-rows-7">
+    <div className="row-start-2 row-end-5 grid grid-rows-7">
             <div className="row-span-1 flex items-center justify-between pl-2">
                 <div className="rounded-t-lg bg-small-10 text-textColor-2"><span className="mx-1">종목</span></div>
             </div>

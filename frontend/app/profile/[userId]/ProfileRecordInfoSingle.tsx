@@ -74,7 +74,7 @@ export default function UserRecordInfoSingle() {
         <tbody>
           {result?.map((item, i) => {
             return (
-              <tr
+    <tr
                 className="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 onClick={() => {
                   playClickSound();

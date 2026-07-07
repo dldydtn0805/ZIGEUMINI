@@ -6,7 +6,7 @@ export default function TotalAssets () {
     const { totalAssetData } = SingleGameStore();
 
     return (
-        <div className="row-span-1 grid grid-rows-6">
+    <div className="row-span-1 grid grid-rows-6">
             <div className="row-start-1 row-end-2 flex items-center justify-start gap-2 pl-2">
                 <div className="rounded-t-lg bg-small-5 text-textColor-2"><span className="mx-1">총 평가 자산</span></div>
                 <div className={`${totalAssetData?.resultProfit > 0 ? "text-red-500" : (totalAssetData?.resultProfit < 0 ? "text-blue-500" : "text-black")}`}>{totalAssetData?.totalAsset.toLocaleString()}원({parseFloat(totalAssetData?.resultRoi).toFixed(2)}%)</div>

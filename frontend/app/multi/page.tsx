@@ -5,14 +5,10 @@ import Profile from "./profile";
 import Ranking from "./Ranking";
 import GameRoomSetting from "./gameroomSetting";
 import PeacefulBgm from "@/public/src/components/bgm/PeacefulBgm";
-import { QueryClient, QueryClientProvider } from "react-query";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 import { Boxes } from "../../public/src/components/ui/background-boxes";
 import { cn } from "../../public/src/utils/cn";
-import userStore from "@/public/src/stores/user/userStore";
 import axios from "axios";
 import { useEffect } from "react";
-const queryClient = new QueryClient();
 
 interface userType {
   memberId: number;
@@ -29,8 +25,6 @@ interface userType {
 }
 
 export default function Multi() {
-  useFetchUserInfo();
-  
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = ""; // for chrome. deprectaed.
@@ -57,8 +51,7 @@ export default function Multi() {
   //  뒤로가기 방지 로직
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="relative bg-background-1">
+    <div className="relative bg-background-1">
         <div className="grid grid-rows-12 h-screen border-separate">
           <PeacefulBgm></PeacefulBgm>
           <Navbar />
@@ -91,6 +84,5 @@ export default function Multi() {
           </div>
         </div>
       </div>
-    </QueryClientProvider>
   );
 }

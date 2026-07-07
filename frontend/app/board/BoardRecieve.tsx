@@ -7,10 +7,9 @@ import Swal from "sweetalert2";
 import { useQuery, UseQueryResult, useQueryClient } from "react-query";
 import { useMutation } from "react-query";
 import axios, { AxiosResponse } from "axios";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
-import userStore from "@/public/src/stores/user/userStore";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 interface ResultType {
   id: number;
@@ -66,9 +65,9 @@ export default function BoardReceive() {
   });
 
   
-  useFetchUserInfo();
   const playClickSound = useClickSound();
-  const { nickname, memberId } = userStore();
+  const { data: me } = useMe();
+  const nickname = me?.nickname;
   const { data, isLoading, error }: UseQueryResult<BoardInfo, Error> = useQuery(
     "boardInfo",
     fetchBoardInfo
@@ -105,7 +104,7 @@ export default function BoardReceive() {
     <div style={{ maxHeight: "60vh" }} className="overflow-auto">
       {result?.map((item, i) => {
         return (
-          <div key={i}>
+    <div key={i}>
             <div className="grid grid-cols-12">
               <div
                 className={`col-start-2 col-end-11 min-h-40 rounded-md bg-small-${
@@ -133,7 +132,7 @@ export default function BoardReceive() {
                       {item.content}
                       {item.communityFileList.map((photo, i) => {
                         return (
-                          <img
+    <img
                             key={i}
                             className="w-full"
                             src={photo}

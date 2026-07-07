@@ -4,15 +4,14 @@ import penguin from "./../../public/src/assets/images/penguin.png";
 import { useMutation, useQueryClient } from "react-query";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
-import userStore from "@/public/src/stores/user/userStore";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 import Swal from "sweetalert2";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function BoardSend() {
-  useFetchUserInfo();
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const playClickSound = useClickSound();
   const sendBoard = async (formData: FormData): Promise<AxiosResponse<any>> => {
     const response = await axios({
@@ -94,7 +93,7 @@ export default function BoardSend() {
     setImage(filteredImage);
   };
 
-  const { asset } = userStore();
+  const asset = me?.asset;
   return (
     <div className="grid justify-center items-center row-span-3 grid-cols-12 rounded-md ">
       <div className="col-start-2">
@@ -214,7 +213,7 @@ export default function BoardSend() {
                   ));
                 } else {
                   return (
-                    <div className="relative" key={index}>
+    <div className="relative" key={index}>
                       <img
                         className="p-1 shadow m-1"
                         width={100}

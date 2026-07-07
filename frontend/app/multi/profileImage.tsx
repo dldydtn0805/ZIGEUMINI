@@ -1,12 +1,11 @@
 import Image from "next/image"
 import Profile from '@/public/src/assets/images/penguin.png'
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage"
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo"
-import userStore from "@/public/src/stores/user/userStore"
+import useMe from "@/public/src/hooks/useMe"
 
 export default function ProfileImage(){
-  useFetchUserInfo()
-  const {asset} = userStore()
+  const { data: me } = useMe()
+  const asset = me?.asset
   return(
     <div className="flex justify-around">
       <Image

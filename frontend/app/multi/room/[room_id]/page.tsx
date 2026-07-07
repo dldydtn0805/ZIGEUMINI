@@ -5,14 +5,12 @@ import FriendSearch from "./friendSearch";
 import GameRule from "./gameRule";
 import Header from "./header";
 import GameMembers from "./GameMembers";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { useEffect } from "react";
 import multigameStore from "@/public/src/stores/multi/MultiGameStore";
 import { useParams } from "next/navigation";
 import PeacefulBgm from "@/public/src/components/bgm/PeacefulBgm";
 
 
-const queryClient = new QueryClient();
 
 export default function page() {
 
@@ -50,8 +48,7 @@ export default function page() {
   }, [room_id]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-12 h-screen border-separate">
+    <div className="grid grid-rows-12 h-screen border-separate">
         <PeacefulBgm></PeacefulBgm>
         <Header />
         <div className="row-start-2 row-end-13 grid grid-cols-12 border">
@@ -69,6 +66,5 @@ export default function page() {
           <GameMembers />
         </div>
       </div>
-    </QueryClientProvider>
   );
 }

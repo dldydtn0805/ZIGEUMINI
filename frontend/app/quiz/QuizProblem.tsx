@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useQuery, UseQueryResult } from "react-query";
-import userStore from "@/public/src/stores/user/userStore";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 interface resultType {
   id: number;
@@ -42,7 +42,8 @@ export default function QuizProblem() {
     setPage(0);
     setSuccess(0);
   }, []);
-  const { asset } = userStore();
+  const { data: me } = useMe();
+  const asset = me?.asset;
   const fetchQuizData = async () => {
     const response = await axios({
       method: "get",

@@ -534,7 +534,7 @@ export default function Chart({ data }: any) {
     const playClickSound = useClickSound();
   
     return (
-        <div className="row-span-9 grid grid-rows-12">
+    <div className="row-span-9 grid grid-rows-12">
             <div className="row-span-1 grid grid-cols-8 items-center">
                 <div className="text-center">종목</div>
                 <button 

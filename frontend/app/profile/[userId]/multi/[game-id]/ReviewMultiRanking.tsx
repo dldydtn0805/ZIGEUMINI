@@ -32,7 +32,6 @@ export default function MultiRanking() {
     }
   }
   return (
- 
     <div className="row-span-9 grid grid-rows-12 bg-slate-500 rounded-md m-1">
       <div className="row-span-1 flex items-center justify-center">
         <div className="text-textColor-2">랭킹 유저들</div>

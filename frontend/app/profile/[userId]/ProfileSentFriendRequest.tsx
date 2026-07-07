@@ -5,7 +5,6 @@ import profileStore from "@/public/src/stores/profile/profileStore";
 import Image from "next/image";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 import { useParams } from "next/navigation";
-import userStore from "@/public/src/stores/user/userStore";
 import Swal from "sweetalert2";
 import {
   UseQueryResult,
@@ -86,7 +85,7 @@ export default function ProfileSentFriendRequest() {
     : { result: null };
   {
     return (
-      <div className="fixed z-50 w-full h-full flex justify-center items-center">
+    <div className="fixed z-50 w-full h-full flex justify-center items-center">
         <div className="relative p-4 w-full max-w-2xl max-h-full ">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 ">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 ">
@@ -121,7 +120,7 @@ export default function ProfileSentFriendRequest() {
             <div className="p-4 md:p-5 space-y-4 h-96 overflow-auto">
               {result?.map((item, i) => {
                 return (
-                  <div
+    <div
                     key={i}
                     className="m-4 p-4 flex justify-between items-center"
                   >

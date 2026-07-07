@@ -1,18 +1,17 @@
 "use client";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
-import userStore from "@/public/src/stores/user/userStore";
 import { useRef, useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import multigameStore from "@/public/src/stores/multi/MultiGameStore";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import zustand from "zustand";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function Chat() {
-  useFetchUserInfo();
   const playClickSound = useClickSound();
   const params = useParams<{ room_id: string }>();
-  const { nickname, memberId } = userStore();
+  const { data: me } = useMe();
+  const nickname = me?.nickname;
   const { sendMessage, setSendMessage } = multigameStore();
   const { receiveMessages, setReceiveMessages } = socketStore();
   const room_id: string = params.room_id;
@@ -57,7 +56,7 @@ export default function Chat() {
       >
         {receiveMessages.map((item: any, i: any) => {
           return (
-            <div key={i}>
+    <div key={i}>
               {item.result.sender} : {item.result.message}
             </div>
           );

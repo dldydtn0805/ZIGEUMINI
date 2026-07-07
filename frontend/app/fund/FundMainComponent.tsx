@@ -3,19 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import MakeFundModal from "./makeFundModal";
-import { QueryClient, QueryClientProvider } from "react-query";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import { Boxes } from "@/public/src/components/ui/background-boxes";
 import { cn } from "@/public/src/utils/cn";
-const queryClient = new QueryClient();
 
 export default function FundMainComponent() {
   const playClickSound = useClickSound();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="row-span-4 grid grid-cols-12 border">
+    <div className="row-span-4 grid grid-cols-12 border">
         <div className="col-span-8 relative w-full overflow-hidden bg-small-1 flex flex-col items-center justify-center rounded-lg ">
           <div className="absolute inset-0 w-full bg-small-1 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
           <Boxes />
@@ -48,6 +45,5 @@ export default function FundMainComponent() {
           }}
         />
       </div>
-    </QueryClientProvider>
   );
 }

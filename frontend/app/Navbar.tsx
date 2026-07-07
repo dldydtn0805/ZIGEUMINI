@@ -5,8 +5,6 @@ import Image from "next/image";
 import logo from "../public/src/assets/images/logo.png";
 import NavbarGameModal from "./NavbarGameModal";
 import NavbarAlarmModal from "./NavbarAlarmModal";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
-import userStore from "@/public/src/stores/user/userStore";
 import fundCrudStore from "@/public/src/stores/fund/crud/FundCrudStore";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
@@ -14,11 +12,12 @@ import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import ProfileFriendRequest from "./profile/[userId]/ProfileFriendRequest";
 import ProfileSentFriendRequest from "./profile/[userId]/ProfileSentFriendRequest";
 import profileStore from "@/public/src/stores/profile/profileStore";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function Navbar() {
-  useFetchUserInfo();
   const { setToggleButton } = fundCrudStore();
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const playClickSound = useClickSound();
 

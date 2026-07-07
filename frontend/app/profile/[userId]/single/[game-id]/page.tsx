@@ -3,7 +3,7 @@
 import { apiUrl, hadoopUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation"; // useParams 대신 useRouter를 사용
-import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import { useQuery } from "react-query";
 
 // navbar
 import Navbar from "@/app/Navbar";
@@ -23,7 +23,6 @@ import SingleReviewStore from "@/public/src/stores/profile/SingleReviewStore";
 // axios
 import axios from "axios";
 
-const queryClient = new QueryClient();
 
 export default function page() {
   const params = useParams();
@@ -99,8 +98,7 @@ export default function page() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-12 h-screen border-separate">
+    <div className="grid grid-rows-12 h-screen border-separate">
         <PeacefulBgm />
         <Navbar />
         <div className="row-span-11 grid grid-cols-12">
@@ -142,6 +140,5 @@ export default function page() {
           </aside>
         </div>
       </div>
-    </QueryClientProvider>
   );
 }

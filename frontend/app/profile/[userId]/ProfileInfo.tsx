@@ -9,13 +9,13 @@ import profileStore from "@/public/src/stores/profile/profileStore";
 import { useQuery, UseQueryResult } from "react-query";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import userStore from "@/public/src/stores/user/userStore";
 import Swal from "sweetalert2";
 import { useMutation, useQueryClient } from "react-query";
 
 import ProfileFriendRequest from "./ProfileFriendRequest";
 import useGetProfileRank from "@/public/src/hooks/useGetProfileRank";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 interface resultType {
   memberID: number;
@@ -38,7 +38,8 @@ interface UserInfo {
 export default function UserInfo() {
   const params = useParams<{ userId?: string }>();
   const id: string | undefined = params.userId;
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const { isOpen, setIsOpen, setFriendRequests, friendRequests } =
     profileStore();
   const playClickSound = useClickSound();
@@ -123,7 +124,7 @@ export default function UserInfo() {
 
   if (userInfoError || isFriendError) {
     return (
-      <div>
+    <div>
         Error: {userInfoError?.message} & {isFriendError?.message}
       </div>
     );

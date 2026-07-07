@@ -7,7 +7,7 @@ export default function AssetHeld({ data } :any) {
     const { stockListData, setSelectedStockIndex } = SingleGameStore();
     const idx:number = stockListData.findIndex((x :any) => x?.stockId == data?.stockId);
     return (
-        <div
+    <div
             onClick={() => {
                 playClickSound();
                 setSelectedStockIndex(idx)}

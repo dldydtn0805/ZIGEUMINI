@@ -1,11 +1,17 @@
 import TierImage from "@/public/src/assets/images/Tier/diamond.png";
 import Image from "next/image";
-import userStore from "@/public/src/stores/user/userStore";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 import useGetProfileRank from "@/public/src/hooks/useGetProfileRank";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function Profile() {
-  const { nickname, rankPoint, win, lose, asset, singleAvgRoi } = userStore();
+  const { data: me } = useMe();
+  const nickname = me?.nickname;
+  const rankPoint = me?.rankPoint;
+  const win = me?.win;
+  const lose = me?.lose;
+  const asset = me?.asset;
+  const singleAvgRoi = me?.singleAvgRoi;
 
   return (
     <div className="col-span-4 bg-background-1 rounded-md grid grid-rows-5 gap-2 shadow-md m-2">

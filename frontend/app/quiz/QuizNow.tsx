@@ -1,12 +1,11 @@
 "use client";
 import { useState } from "react";
 import quizStore from "@/public/src/stores/quiz/quizStore";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
-import userStore from "@/public/src/stores/user/userStore";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function QuizNow() {
-  useFetchUserInfo();
-  const { asset } = userStore();
+  const { data: me } = useMe();
+  const asset = me?.asset;
   const { success } = quizStore();
 
   return (

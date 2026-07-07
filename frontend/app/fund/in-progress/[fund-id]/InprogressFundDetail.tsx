@@ -12,7 +12,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
-import userStore from "@/public/src/stores/user/userStore";
+import useMe from "@/public/src/hooks/useMe";
 
 const fetchFundDetail = async (fundId: string) => {
   const token = sessionStorage.getItem("accessToken");
@@ -33,7 +33,8 @@ export default function InprogressFundDetail() {
   const router = useRouter();
   const [fundDetail, setFundDetail] = useState<FundDetail | null>(null);
   const playClickSound = useClickSound();
-  const { nickname } = userStore();
+  const { data: me } = useMe();
+  const nickname = me?.nickname;
 
   const params = useParams();
   const fundId = params["fund-id"] as string;
@@ -150,7 +151,7 @@ export default function InprogressFundDetail() {
             ) : (
               fundDetail?.fundStocks.map((stock: FundStocks, i: number) => {
                 return (
-                  <tr
+    <tr
                     key={i}
                     className="bg-white border-b text-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >

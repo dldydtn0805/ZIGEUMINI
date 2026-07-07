@@ -12,10 +12,9 @@ import type {
 } from "@/public/src/stores/fund/crud/FundCrudStore";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import userStore from "@/public/src/stores/user/userStore";
 import Swal from "sweetalert2";
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
+import useMe from "@/public/src/hooks/useMe";
 
 type FundRegister = {
   fundId: number;
@@ -36,10 +35,11 @@ const fetchFundDetail = async (fundId: string, token: string | null) => {
 
 export default function RecruitingFundDetail() {
   const router = useRouter();
-  useFetchUserInfo();
   const playClickSound = useClickSound();
   const queryClient = useQueryClient();
-  const { nickname, asset } = userStore();
+  const { data: me } = useMe();
+  const nickname = me?.nickname;
+  const asset = me?.asset;
   const token =
     typeof window !== "undefined"
       ? sessionStorage.getItem("accessToken")
@@ -81,7 +81,7 @@ export default function RecruitingFundDetail() {
         setIsMember(true);
       }
     });
-  }, [data]);
+  }, [data, nickname]);
 
   const RegisterFund = async (fundId: string, investmoney: string) => {
     const minmoney = data?.result.minimumAmount;
@@ -260,7 +260,7 @@ export default function RecruitingFundDetail() {
               fundDetail?.fundMembers.map(
                 (fundmember: FundMembers, i: number) => {
                   return (
-                    <tr
+    <tr
                       key={i}
                       className="bg-white border-b text-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >

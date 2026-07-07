@@ -115,7 +115,7 @@ export default function TurnInfo () {
 
     
     return (
-        <div className="row-start-1 row-end-2 grid grid-rows-2">
+    <div className="row-start-1 row-end-2 grid grid-rows-2">
             <div className="row-span-1">
                 <div className="m-1 text-textColor-1 text-center">현재 턴 : {turn} / 50</div>
                 <TurnNow />

@@ -5,7 +5,6 @@ import profileStore from "@/public/src/stores/profile/profileStore";
 import Image from "next/image";
 import useGetProfileImage from "@/public/src/hooks/useGetProfileImage";
 import { useParams } from "next/navigation";
-import userStore from "@/public/src/stores/user/userStore";
 import Swal from "sweetalert2";
 import {
   UseQueryResult,
@@ -13,6 +12,7 @@ import {
   useQueryClient,
   useMutation,
 } from "react-query";
+import useMe from "@/public/src/hooks/useMe";
 interface resultType {
   id: number;
   nickname: string;
@@ -30,7 +30,8 @@ export default function ProfileBoardDetail({
 }: any) {
   const params = useParams<{ userId?: string }>();
   const id: string | undefined = params.userId;
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const fetchCommunityDetail = async () => {
     const response = await axios({
       url: apiUrl(`/community?communityId=${isBoardOpen}`),

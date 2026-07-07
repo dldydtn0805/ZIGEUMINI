@@ -1,7 +1,6 @@
 "use client";
 
 import { apiUrl } from "@/public/src/config/api";
-import userStore from "@/public/src/stores/user/userStore";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";

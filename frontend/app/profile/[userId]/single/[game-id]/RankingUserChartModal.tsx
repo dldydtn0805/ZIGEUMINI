@@ -255,7 +255,7 @@ function Chart({ tradeList, data }: any) {
 }, [tradeList, data]); 
   
   return (
-      <div className="row-span-11 grid grid-rows-12">
+    <div className="row-span-11 grid grid-rows-12">
         <div
           id="container"
           className="row-span-12 flex items-center justify-center"

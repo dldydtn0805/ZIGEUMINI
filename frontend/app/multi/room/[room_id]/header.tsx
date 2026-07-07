@@ -8,11 +8,12 @@ import axios from "axios";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import { useEffect, useState } from "react";
-import userStore from "@/public/src/stores/user/userStore";
 import Swal from "sweetalert2";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function Header() {
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const playClickSound = useClickSound();
   const router = useRouter();
   const params = useParams<{ room_id?: string }>();

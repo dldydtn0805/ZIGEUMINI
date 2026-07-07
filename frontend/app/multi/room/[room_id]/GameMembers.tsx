@@ -7,14 +7,15 @@ import ProfileImage from '@/public/src/assets/images/profile-person-image.png'
 import useClickSound from '@/public/src/components/clickSound/DefaultClick'
 import socketStore from '@/public/src/stores/websocket/socketStore'
 import { ParticipantsType } from '@/public/src/stores/websocket/socketStore'
-import userStore from '@/public/src/stores/user/userStore'
 import axios from 'axios'
 import useGetProfileImage from '@/public/src/hooks/useGetProfileImage'
+import useMe from '@/public/src/hooks/useMe'
 
 
 export default function GameMembers(){
   const { roomId, participants, readyState, hostId } = socketStore();
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const playClickSound = useClickSound();
   const kickUser = (id: number) => {
     axios({

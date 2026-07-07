@@ -74,7 +74,7 @@ export default function FriendSearch() {
       >
         {result.map((friend: any, i: number) => {
           return (
-            <div
+    <div
               key={i}
               // className={`${
               //   friend.isLogin == false && `hidden`

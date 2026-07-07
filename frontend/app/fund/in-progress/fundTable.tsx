@@ -89,7 +89,7 @@ export default function FundTable() {
         <tbody>
           {filteredFunds.map((fund: FundResult, i: number) => {
             return (
-              <tr
+    <tr
                 key={i}
                 onClick={() => {
                   playClickSound();

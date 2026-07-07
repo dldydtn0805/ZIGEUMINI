@@ -30,7 +30,7 @@ export default function FundGameEndModal ({ isOpen, onClose } :any) {
     
     
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="text-center bg-white rounded shadow-lg grid grid-rows-12" style={{ width: '500px', height: '300px' }}>
                 <div className="row-span-2">펀드 게임 종료</div>
                 <div className="row-span-6 m-3">

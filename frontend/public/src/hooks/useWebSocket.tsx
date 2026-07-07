@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import { CompatClient, IMessage, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import Swal from "sweetalert2";
-import userStore from "../stores/user/userStore";
 import socketStore from "../stores/websocket/socketStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import useMe from "./useMe";
 
 type ReadyState = Record<number, boolean>;
 
@@ -63,7 +63,9 @@ type SocketMessage = {
 export const useWebSocket = () => {
   const client = useRef<CompatClient>({} as CompatClient);
   const { setClientObject, clientObject, setResultNumberCount } = socketStore();
-  const { memberId, nickname } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
+  const nickname = me?.nickname;
   const {
     receiveMessages,
     setReceiveMessages,

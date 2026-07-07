@@ -2,9 +2,7 @@
 
 import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
 // navbar
 import Navbar from "@/app/Navbar";
 // BGM
@@ -23,17 +21,12 @@ import StockList from "./StockList";
 import MarketAndTrends from "./MarketAndTrends";
 
 // Store
-import userStore from "@/public/src/stores/user/userStore";
 import FundGameStore from "@/public/src/stores/fund/game/FundGameStore";
-// Hook
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 // axios
 import axios from "axios";
 import { useParams } from "next/navigation";
 
 export default function FundPlay() {
-  useFetchUserInfo();
-
   const preventClose = (e: BeforeUnloadEvent) => {
     e.preventDefault();
     e.returnValue = ""; // for chrome. deprectaed.
@@ -178,8 +171,7 @@ export default function FundPlay() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-12 h-screen border-separate">
+    <div className="grid grid-rows-12 h-screen border-separate">
         <InGameBgm></InGameBgm>
         {/* navbar */}
         <Navbar />
@@ -208,6 +200,5 @@ export default function FundPlay() {
           </aside>
         </div>
       </div>
-    </QueryClientProvider>
   );
 }

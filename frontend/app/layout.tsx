@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Navbar from "./Navbar";
 import WebSocket from "./WebSocket";
-import ProfileFriendRequest from "./profile/[userId]/ProfileFriendRequest";
-import ProfileSentFriendRequest from "./profile/[userId]/ProfileSentFriendRequest";
+import QueryProvider from "./QueryProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,8 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <WebSocket></WebSocket>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <QueryProvider>
+          <WebSocket />
+          {children}
+        </QueryProvider>
+      </body>
     </html>
   );
 }

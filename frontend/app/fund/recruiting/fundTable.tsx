@@ -83,7 +83,7 @@ export default function FundTable(){
         {
           filteredFunds.map((fund: FundResult, i:number)=> {
           return (
-              <tr key={i}
+    <tr key={i}
               onClick={()=> {
                 playClickSound();
                 router.push(`./recruiting/${fund.fundId}`, )

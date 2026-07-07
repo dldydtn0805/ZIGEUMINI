@@ -5,7 +5,7 @@ export default function MarketInfo () {
     const { turn, rawMaterialListData } = SingleGameStore();
 
     return (
-        <div className="row-start-2 row-end-7">
+    <div className="row-start-2 row-end-7">
             <div className="grid grid-cols-6 bg-small-9 rounded-xl m-1 items-center justify-center">
                 <div className="col-span-2 text-center text-textColor-2 ml-4">WTI</div>
                 <div className="col-span-4 text-end text-textColor-2 mr-2">{rawMaterialListData[turn+299]?.wti != null ? `${rawMaterialListData[turn+299].wti}$` : "값 X"}</div>

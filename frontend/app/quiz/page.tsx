@@ -3,10 +3,8 @@
 import Navbar from "@/app/Navbar";
 import QuizGiven from "./QuizGiven";
 import PeacefulBgm from "@/public/src/components/bgm/PeacefulBgm";
-import { QueryClient, QueryClientProvider } from "react-query";
 import WaitingBgm from "@/public/src/components/bgm/WaitingBgm";
 import { useEffect } from "react";
-const queryClient = new QueryClient();
 
 export default function Quiz() {
   const preventClose = (e: BeforeUnloadEvent) => {
@@ -35,12 +33,10 @@ export default function Quiz() {
   //  뒤로가기 방지 로직
   
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-12 h-screen bg-background-1  ">
+    <div className="grid grid-rows-12 h-screen bg-background-1  ">
         <WaitingBgm></WaitingBgm>
         <Navbar />
         <QuizGiven />
       </div>
-    </QueryClientProvider>
   );
 }

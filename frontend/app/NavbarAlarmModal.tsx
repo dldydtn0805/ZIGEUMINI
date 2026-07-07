@@ -2,11 +2,9 @@
 
 import { apiUrl } from "@/public/src/config/api";
 
-import useFetchUserInfo from "@/public/src/hooks/useFetchUserInfo";
 import FundSettlementModal from "./fund/fundSettlementModal";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import { useEffect, useState } from "react";
-import userStore from "@/public/src/stores/user/userStore";
 import socketStore from "@/public/src/stores/websocket/socketStore";
 import axios from "axios";
 import { UseQueryResult, useQuery } from "react-query";
@@ -27,7 +25,6 @@ interface NotificationType {
 export default function NavbarAlarmModal() {
   const { isOpen, setIsOpen } = profileStore();
   const [fundSettlementOpen, setFundSettlementOpen] = useState(false);
-  useFetchUserInfo();
 
   const fewtchMyNotification = async () => {
     const response = await axios({
@@ -65,7 +62,7 @@ export default function NavbarAlarmModal() {
       <div className="overflow-auto" style={{ height: "50vh" }}>
         {result?.map((item, i) => {
           return (
-            <div className="divide-y divide-gray-100 dark:divide-gray-700">
+    <div className="divide-y divide-gray-100 dark:divide-gray-700">
               <a
                 onClick={() => {
                   setIsOpen(!isOpen);

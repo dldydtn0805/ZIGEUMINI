@@ -20,7 +20,7 @@ export default function SingleGameEndModal ({ isOpen, onClose } :any) {
     
     
     return (
-        <div className={`fixed inset-0 flex items-center justify-center z-50`}>
+    <div className={`fixed inset-0 flex items-center justify-center z-50`}>
             <div className={`text-center bg-white rounded grid grid-rows-12  border-2 border-${bgColor} shadow-lg shadow-${borderColor}`} style={{ width: '700px', height: '500px' }}>
                 <div className="row-span-1 flex items-center justify-center">싱글 게임 종료</div>
                 <div className="row-span-1 flex items-center justify-center">{singleGameEndInfoData?.startDate.split('T')[0]} ~ {singleGameEndInfoData?.endDate.split('T')[0]} (남은 기회 : {singleGameEndInfoData.singleGameChance})</div>

@@ -3,7 +3,7 @@
 import { apiUrl } from "@/public/src/config/api";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useQuery, QueryClient, QueryClientProvider } from "react-query";
+import { useQuery } from "react-query";
 
 // navbar
 import Navbar from "@/app/Navbar";
@@ -22,7 +22,6 @@ import MultiReviewStore from "@/public/src/stores/profile/MultiReviewStore";
 // axios
 import axios from "axios";
 
-const queryClient = new QueryClient();
 
 export default function page() {
   const params = useParams();
@@ -91,8 +90,7 @@ export default function page() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-12 h-screen border-separate">
+    <div className="grid grid-rows-12 h-screen border-separate">
         <PeacefulBgm />
         <Navbar />
         <div className="row-span-11 grid grid-cols-12">
@@ -105,6 +103,5 @@ export default function page() {
           </main>
         </div>
       </div>
-    </QueryClientProvider>
   );
 }

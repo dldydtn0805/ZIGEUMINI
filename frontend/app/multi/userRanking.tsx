@@ -3,18 +3,15 @@
 import { useState } from "react";
 import ProfileModal from "./profileModal";
 import multigameStore from "@/public/src/stores/multi/MultiGameStore";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { userType } from "./FriendUserRankingList";
 import useClickSound from "@/public/src/components/clickSound/DefaultClick";
 
 
 export default function UserRanking({ user, rank }: { user: userType, rank: number }) {
   const { lobbyModal, setLobbyModal, userId, setUserId } = multigameStore();
-  const queryClient = new QueryClient();
-  const playClickSound = useClickSound();
+    const playClickSound = useClickSound();
   
   return (
-   <QueryClientProvider client={queryClient}>
     <div
       className={`grid grid-cols-1 border rounded-md p-2 hover:cursor-pointer`}
     >
@@ -31,7 +28,6 @@ export default function UserRanking({ user, rank }: { user: userType, rank: numb
         <span>{user.asset?.toLocaleString()}원</span>
       </div>
       {lobbyModal && <ProfileModal />}
-    </div>
-   </QueryClientProvider> 
+    </div> 
   );
 }

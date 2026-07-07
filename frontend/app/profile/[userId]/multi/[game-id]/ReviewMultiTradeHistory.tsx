@@ -1,8 +1,9 @@
-import userStore from "@/public/src/stores/user/userStore";
 import MultiReviewStore from "@/public/src/stores/profile/MultiReviewStore";
+import useMe from "@/public/src/hooks/useMe";
 
 export default function MultiTradeHistory() {
-  const { memberId } = userStore();
+  const { data: me } = useMe();
+  const memberId = me?.memberId;
   const { multiLogMemberDtoList } = MultiReviewStore();
   const userInfo :any = multiLogMemberDtoList.find((x :any) => x.memberId == memberId);
   

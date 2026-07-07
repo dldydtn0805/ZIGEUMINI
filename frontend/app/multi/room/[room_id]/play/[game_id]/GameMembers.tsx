@@ -26,7 +26,7 @@ export default function GameMembers() {
       {players.map((player, i) => {
         const color = rank[player.rank];
         return (
-          <div key={i} className="border gap-1 row-span-1 grid grid-rows-2">
+    <div key={i} className="border gap-1 row-span-1 grid grid-rows-2">
             <div className="row-span-1 grid grid-cols-12 text-center items-center">
               <div className={`col-span-3 border p-1 m-1 ${color} rounded-lg`}>
                 {player.rank}위

@@ -87,7 +87,7 @@ export default function UserRecordInfoManagerFund() {
         <tbody>
           {result?.map((item, i) => {
             return (
-              <tr
+    <tr
                 key={i}
                 className="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 onClick={() => {
