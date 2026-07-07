@@ -50,8 +50,6 @@ export default function page() {
     };
   }, []);
   //  뒤로가기 방지 로직
-
-  const [data, setData] = useState<dataType[]>([]);
   const {
     day,
     setDay,
@@ -88,26 +86,24 @@ export default function page() {
     setUnrealizedGain,
     setTradeList,
   } = socketStore();
+  
   const fetchMultigameData = async () => {
     setDay(1);
+    const currentStock = multiGameStockIds[roundNumber - 1];
+
+    if (!currentStock) {
+      return;
+    }
+
     try {
-      const data = {
-        roundNumber: roundNumber,
-        stockId: multiGameStockIds[roundNumber - 1].stockId,
-        gameId: gameId,
-        firstDayStockChartId:
-          multiGameStockIds[roundNumber - 1].firstDayStockChartId,
-        roomId: roomId,
-      };
       const response = await axios({
         method: "post",
         url: apiUrl("/multi/game-chart"),
         data: {
           roundNumber: roundNumber,
-          stockId: multiGameStockIds[roundNumber - 1].stockId,
+          stockId: currentStock.stockId,
           gameId: gameId,
-          firstDayStockChartId:
-            multiGameStockIds[roundNumber - 1].firstDayStockChartId,
+          firstDayStockChartId: currentStock.firstDayStockChartId,
           roomId: roomId,
         },
         headers: {
@@ -118,7 +114,7 @@ export default function page() {
       setStockId(response.data.result.stockId);
       setStockChartList(response.data.result.stockChartList);
       setIsLoading(false);
-      setTodayEndPrice(response.data.result.stockChartList[300].endPrice);
+      setTodayEndPrice(response.data.result.stockChartList[300]?.endPrice ?? 0);
       setAveragePrice(0);
       setCash(10000000);
       setInitialAsset(10000000);
@@ -133,12 +129,14 @@ export default function page() {
       setTradeList([]);
     } catch (error) {
       setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchMultigameData();
-  }, []);
+  }, [multiGameStockIds, roundNumber, gameId, roomId]);
 
   const params = useParams<{ room_id?: string; game_id?: string }>();
   const room_id: string | undefined = params.room_id;
@@ -161,8 +159,10 @@ export default function page() {
   };
 
   useEffect(() => {
-    fetchMultiPlayUsers();
-  }, [isLoading, isError]);
+    if (!isLoading && !isError && room_id && game_id) {
+      fetchMultiPlayUsers();
+    }
+  }, [isLoading, isError, room_id, game_id]);
 
   if (isLoading) {
     return <div className="rainbow"></div>;
